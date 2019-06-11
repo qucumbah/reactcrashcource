@@ -1,0 +1,15 @@
+An app for learning words by spaced repetition
+Tabs:
+1. Editing set
+	a. List of already added words
+	b. Word input; translation input
+	c. Remove word button
+2. Sets viewer
+	a. Lists all sets with empty spaces between them; the set viewer itself is the same as in 1.a
+	b. Indicator of how many times the set has been repeated
+3. Set check
+	a. Gives foreign words one by one
+	b. "Show translation" button
+
+This cource:
+1st tab
