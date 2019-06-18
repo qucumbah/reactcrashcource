@@ -49,8 +49,16 @@ class Word extends React.Component {
           </div>
         );
       case "edition":
-        let wordInput = <input value={this.state.tempWord} onChange={e=>this.handleWordEdition(e)} />;
-        let translationInput = <input value={this.state.tempTranslation} onChange={e=>this.handleTranslationEdition(e)} />;
+        let wordInput = (
+          <input
+            value={this.state.tempWord}
+            onChange={e=>this.handleWordEdition(e)}
+          />);
+        let translationInput = (
+          <input
+            value={this.state.tempTranslation}
+            onChange={e=>this.handleTranslationEdition(e)}
+          />);
         return (
           <div className="word word--edition">
             {wordInput}
@@ -65,7 +73,9 @@ class Word extends React.Component {
             <div>{this.props.word}</div>
             <div>{this.props.translation}</div>
             <div style={{gridColumn: "span 2"}} />
-            <div style={{gridColumn: "span 2"}}>Are you sure you want to delete this word?</div>
+            <div style={{gridColumn: "span 2"}}>
+              Are you sure you want to delete this word?
+            </div>
             <div className="yes" onClick={()=>this.props.onRemoval()}>V</div>
             <div className="no" onClick={()=>this.setProcess("none")}>X</div>
           </div>

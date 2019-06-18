@@ -76,8 +76,16 @@ class App extends React.Component {
     let result = (
       <div className="app">
         <div className="menuPlaceholder" />
-        <Menu items={this.state.menuItems} open={this.state.menuOpen} toggle={this.toggleMenu} />
-        <SetEditor set={this.state.sets[0]} onWordAdd={word=>this.addWord(word)} onSetChange={this.handleSetChange} />
+        <Menu
+          items={this.state.menuItems}
+          open={this.state.menuOpen}
+          toggle={this.toggleMenu}
+        />
+        <SetEditor
+          set={this.state.sets[0]}
+          onWordAdd={word=>this.addWord(word)}
+          onSetChange={this.handleSetChange}
+        />
       </div>
     );
     return result;
