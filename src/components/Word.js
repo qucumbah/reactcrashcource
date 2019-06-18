@@ -42,8 +42,8 @@ class Word extends React.Component {
       case "none":
         return (
           <div className="word">
-            <div>{this.props.word}</div>
-            <div>{this.props.translation}</div>
+            <div className="word__word">{this.props.word}</div>
+            <div className="word__translation">{this.props.translation}</div>
             <div className="edit" onClick={()=>this.setProcess("edition")}>P</div>
             <div className="no" onClick={()=>this.setProcess("removal")}>X</div>
           </div>
@@ -70,8 +70,8 @@ class Word extends React.Component {
       case "removal":
         return (
           <div className="word word--removal">
-            <div>{this.props.word}</div>
-            <div>{this.props.translation}</div>
+            <div className="word__word">{this.props.word}</div>
+            <div className="word__translation">{this.props.translation}</div>
             <div style={{gridColumn: "span 2"}} />
             <div style={{gridColumn: "span 2"}}>
               Are you sure you want to delete this word?

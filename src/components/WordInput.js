@@ -11,7 +11,7 @@ class WordInput extends React.Component {
 
   addWord() {
     this.props.onWordAdd(
-      {word: this.state.word, userTranslation: this.state.translation}
+      {word: this.state.word, translation: this.state.translation}
     );
   }
 

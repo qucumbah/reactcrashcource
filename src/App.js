@@ -5,21 +5,32 @@ import Viewer from './components/Viewer.js';
 import Exercise from './components/Exercise.js';
 import './App.css';
 
-import TestComponent from './components/TestComponent.js';
+// import TestComponent from './components/TestComponent.js';
 
 class App extends React.Component {
   state = {
     sets: [
       {
         words: [
-          {word: "fetch", userTranslation: "=get"},
-          {word: "master", userTranslation: "=main"},
-          {word: "toungue", userTranslation: "=language"},
-          {word: "word", userTranslation: "=letters"},
+          {word: "fetch", translation: "=get"},
+          {word: "master", translation: "=main"},
+          {word: "toungue", translation: "=language"},
+          {word: "word", translation: "=letters"},
         ],
         nChecked: 0,
+        id: 0,
+      },
+      {
+        words: [
+          {word: "awa", translation: "=gewwet"},
+          {word: "wwe", translation: "=ww"},
+          {word: "s", translation: "=aa"},
+        ],
+        nChecked: 0,
+        id: 1,
       }
     ],
+    nextId: 2,
 
     menuItems: [
       {
@@ -44,14 +55,14 @@ class App extends React.Component {
       }
     ],
 
+    curSet: 0,
     menuOpen: false,
     page: "editor",
-  }
 
-  addWord(word) {
-    let newState = this.state;
-    newState.sets[0].words.push(word);
-    this.setState(newState);
+    viewerSettings: {
+      wordsHidden: false,
+      translationsHidden: false,
+    }
   }
 
   toggleMenu = () => {
@@ -69,19 +80,46 @@ class App extends React.Component {
     });
   }
 
-  handleSetChange = (action, index, newWord, newTranslation) => {
+  handleSetChange = (setId, action, index, newWord, newTranslation) => {
+    let newState = this.state;
+    let newSet = newState.sets.find(set => {
+      return set.id===setId;
+    });
+
+    if (!newSet) {
+      throw new Error(); // Handle error when we implement warning system
+    }
+
     if (action==="removal") {
-      let newState = this.state;
-      newState.sets[0].words.splice(index, 1);
+      newSet.words.splice(index, 1);
       this.setState(newState);
     } else if (action==="edition") {
-      let newState = this.state;
-      newState.sets[0].words[index] = {
+      newSet.words[index] = {
         word: newWord,
-        userTranslation: newTranslation,
+        translation: newTranslation,
       };
       this.setState(newState);
     }
+  }
+
+  addWord(word) {
+    let i = this.state.sets[this.state.curSet].words.findIndex(w => {
+      return w.word===word.word && w.translation===word.translation;
+    });
+    if (i!==-1) {
+      // Handle error when we implement warning system
+      return;
+    }
+
+    let newState = this.state;
+    newState.sets[this.state.curSet].words.push(word);
+    this.setState(newState);
+  }
+
+  changeViewerSettings = newSettings => {
+    this.setState({
+      viewerSettings: newSettings,
+    });
   }
 
   render() {
@@ -90,7 +128,7 @@ class App extends React.Component {
       case "editor":
         page = (
           <SetEditor
-            set={this.state.sets[0]}
+            set={this.state.sets[this.state.curSet]}
             onWordAdd={word=>this.addWord(word)}
             onSetChange={this.handleSetChange}
           />
@@ -98,12 +136,22 @@ class App extends React.Component {
       break;
       case "viewer":
         page = (
-          <Viewer />
+          <Viewer
+            sets={this.state.sets}
+            onSettingsChange={this.changeViewerSettings}
+            onSetChange={this.handleSetChange}
+            settings={this.state.viewerSettings}
+          />
         );
       break;
       case "exercise":
         page = (
           <Exercise />
+        );
+      break;
+      default:
+        page = (
+          <div>Something went wrong</div>
         );
       break;
     }

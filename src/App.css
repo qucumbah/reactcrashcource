@@ -39,7 +39,8 @@ a {
     position: absolute;
     top: 0;
     overflow: hidden;
-    background-color: white; }
+    background-color: white;
+    border-right: 1px solid black; }
     .menu .left .menuItem {
       position: relative;
       width: 400px;
@@ -119,3 +120,24 @@ a {
     background-color: #ff0000; }
   .word .edit {
     background-color: #0000ff; }
+
+.viewer .word__word, .viewer .word__translation {
+  transition: .2s; }
+
+.viewer.--hideWords .word__word {
+  opacity: 0; }
+
+.viewer.--hideTranslations .word__translation {
+  opacity: 0; }
+
+.viewerSettings label {
+  width: 50%;
+  height: 50px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black; }
+
+.setWrapper {
+  margin: 20px;
+  border: 1px solid black; }

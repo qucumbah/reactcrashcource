@@ -3,16 +3,17 @@ import Word from './Word.js';
 
 class Set extends React.Component {
   handleWordEdition = (index, newWord, newTranslation) => {
-    this.props.onSetChange("edition", index, newWord, newTranslation);
+    this.props.onSetChange(
+        this.props.set.id, "edition", index, newWord, newTranslation);
   }
   handleWordRemoval = (index) => {
-    this.props.onSetChange("removal", index);
+    this.props.onSetChange(this.props.set.id, "removal", index);
   }
 
   render() {
     let words = this.props.set.words.map((wordObject, index)=>{
       let word = wordObject.word;
-      let translation = wordObject.userTranslation;
+      let translation = wordObject.translation;
       return (
         <Word
           word={word}
