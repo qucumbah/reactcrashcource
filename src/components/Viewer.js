@@ -8,8 +8,11 @@ class Viewer extends React.Component {
       return (
         <SetWrapper
           set={set}
-          onSetChange={this.props.onSetChange}
           key={set.id}
+          onSetChange={this.props.onSetChange}
+          onProgressChange={this.props.onProgressChange}
+          onSetEditorOpen={this.props.onSetEditorOpen}
+          onSetRemoval={this.props.onSetRemoval}
         />
       );
     });

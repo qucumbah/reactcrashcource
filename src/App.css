@@ -78,7 +78,7 @@ a {
     width: 400px; }
   .menu.menu--open [name="burger"] {
     transition: 0.2s;
-    transform: rotate(90deg); }
+    transform: rotate(180deg); }
   .menu.menu--closed .darken {
     background-color: rgba(0, 0, 0, 0);
     display: none; }
@@ -136,3 +136,27 @@ a {
 .setWrapper {
   margin: 20px;
   border: 1px solid black; }
+  .setWrapper .upperPanel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .setWrapper .upperPanel span {
+      vertical-align: text-bottom; }
+  .setWrapper .progressBar div {
+    display: inline-block;
+    vertical-align: bottom;
+    width: 30px;
+    height: 30px; }
+  .setWrapper .progressBar .checked {
+    background-color: green; }
+  .setWrapper .progressBar .unchecked {
+    background-color: gray; }
+  .setWrapper .buttons {
+    display: flex; }
+    .setWrapper .buttons .button {
+      position: relative;
+      height: 30px; }
+      .setWrapper .buttons .button img {
+        position: relative;
+        height: 100%;
+        width: auto; }

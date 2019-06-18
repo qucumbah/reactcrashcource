@@ -109,7 +109,7 @@ a {
 
     [name="burger"] {
       transition: $transitionDuration;
-      transform: rotate(90deg);
+      transform: rotate(180deg);
     }
   }
 
@@ -196,4 +196,41 @@ a {
 .setWrapper {
   margin: 20px;
   border: 1px solid black;
+
+  .upperPanel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+      vertical-align: text-bottom;
+    }
+  }
+
+  .progressBar {
+    div {
+      display: inline-block;
+      vertical-align: bottom;
+      width: 30px;
+      height: 30px;
+    }
+    .checked {
+      background-color: green;
+    }
+    .unchecked {
+      background-color: gray;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    .button {
+      position: relative;
+      height: 30px;
+      img {
+        position: relative;
+        height: 100%;
+        width: auto;
+      }
+    }
+  }
 }

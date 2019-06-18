@@ -17,7 +17,7 @@ class App extends React.Component {
           {word: "toungue", translation: "=language"},
           {word: "word", translation: "=letters"},
         ],
-        nChecked: 0,
+        progress: 3,
         id: 0,
       },
       {
@@ -26,7 +26,7 @@ class App extends React.Component {
           {word: "wwe", translation: "=ww"},
           {word: "s", translation: "=aa"},
         ],
-        nChecked: 0,
+        progress: 2,
         id: 1,
       }
     ],
@@ -126,6 +126,41 @@ class App extends React.Component {
     });
   }
 
+  handleProgressChange = (setId, newProgress) => {
+    let newState = this.state;
+    let newSet = newState.sets.find(set => {
+      return set.id===setId;
+    });
+
+    if (!newSet) {
+      throw new Error(); // Handle error when we implement warning system
+    }
+
+    newSet.progress = newProgress;
+    this.setState(newState);
+  }
+
+  handleSetEditorOpen = setId => {
+    this.setState({ curSet: setId });
+    this.setPage("editor");
+  }
+
+  handleSetRemoval = setId => {
+    console.log("awaw");
+    let newState = this.state;
+    let newSetIndex = newState.sets.findIndex(set => {
+      return set.id===setId;
+    });
+
+    if (newSetIndex===-1) {
+      throw new Error(); // Handle error when we implement warning system
+    }
+
+    newState.sets.splice(newSetIndex, 1);
+
+    this.setState(newState);
+  }
+
   render() {
     let page;
     switch (this.state.page) {
@@ -142,9 +177,12 @@ class App extends React.Component {
         page = (
           <Viewer
             sets={this.state.sets}
+            settings={this.state.viewerSettings}
             onSettingsChange={this.changeViewerSettings}
             onSetChange={this.handleSetChange}
-            settings={this.state.viewerSettings}
+            onProgressChange={this.handleProgressChange}
+            onSetEditorOpen={this.handleSetEditorOpen}
+            onSetRemoval={this.handleSetRemoval}
           />
         );
       break;
