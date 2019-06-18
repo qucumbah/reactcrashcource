@@ -35,22 +35,26 @@ class App extends React.Component {
     menuItems: [
       {
         name: "",
-        imgPath: "img/burger.png",
+        //imgPath: "img/outline-menu-24px.svg",
+        iconName: "burger",
         onClick: ()=>this.toggleMenu(),
       },
       {
         name: "Set editor",
-        imgPath: "img/pencil.png",
+        //imgPath: "img/outline-edit-24px.svg",
+        iconName: "edit",
         onClick: ()=>this.setPage("editor"),
       },
       {
         name: "All sets",
-        imgPath: "img/list.png",
+        //imgPath: "img/outline-view_list-24px.svg",
+        iconName: "list",
         onClick: ()=>this.setPage("viewer"),
       },
       {
         name: "Exercise",
-        imgPath: "img/book.png",
+        //imgPath: "img/outline-class-24px.svg",
+        iconName: "exercise",
         onClick: ()=>this.setPage("exercise"),
       }
     ],

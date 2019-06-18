@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './Button.js';
 
 class Word extends React.Component {
   constructor(props) {
@@ -44,8 +45,8 @@ class Word extends React.Component {
           <div className="word">
             <div className="word__word">{this.props.word}</div>
             <div className="word__translation">{this.props.translation}</div>
-            <div className="edit" onClick={()=>this.setProcess("edition")}>P</div>
-            <div className="no" onClick={()=>this.setProcess("removal")}>X</div>
+            <Button iconName="edit" onClick={()=>this.setProcess("edition")} />
+            <Button iconName="remove" onClick={()=>this.setProcess("removal")} />
           </div>
         );
       case "edition":
@@ -63,21 +64,18 @@ class Word extends React.Component {
           <div className="word word--edition">
             {wordInput}
             {translationInput}
-            <div className="yes" onClick={()=>this.applyEdition()}>V</div>
-            <div className="no" onClick={()=>this.cancelEdition()}>X</div>
+            <Button iconName="yes" onClick={()=>this.applyEdition()} />
+            <Button iconName="no" onClick={()=>this.cancelEdition()} />
           </div>
         );
       case "removal":
         return (
           <div className="word word--removal">
-            <div className="word__word">{this.props.word}</div>
-            <div className="word__translation">{this.props.translation}</div>
-            <div style={{gridColumn: "span 2"}} />
             <div style={{gridColumn: "span 2"}}>
-              Are you sure you want to delete this word?
+              Are you sure you want to delete the word {this.props.word}?
             </div>
-            <div className="yes" onClick={()=>this.props.onRemoval()}>V</div>
-            <div className="no" onClick={()=>this.setProcess("none")}>X</div>
+            <Button iconName="yes" onClick={()=>this.props.onRemoval()} />
+            <Button iconName="no" onClick={()=>this.setProcess("none")} />
           </div>
         );
       default:

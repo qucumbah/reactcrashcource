@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './Button.js';
 
 class Menu extends React.Component {
   toggle = () => {
@@ -11,9 +12,7 @@ class Menu extends React.Component {
     let menuItems = this.props.items.map((item, index) => {
       return (
         <div key={index} onClick={item.onClick} className="menuItem">
-          <div className="imageContainer">
-            <img src={item.imgPath} alt={item.name} />
-          </div>
+          <Button iconName={item.iconName} alt={item.name} />
           <span>{item.name}</span>
         </div>
       );

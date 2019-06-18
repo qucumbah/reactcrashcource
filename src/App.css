@@ -49,17 +49,17 @@ a {
       grid-template-columns: 60px 1fr;
       grid-auto-rows: 60px;
       cursor: pointer; }
-      .menu .left .menuItem .imageContainer {
+      .menu .left .menuItem .button {
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         border-right: 1px solid black; }
-        .menu .left .menuItem .imageContainer img {
+        .menu .left .menuItem .button img {
           box-sizing: content-box;
-          width: 30px;
-          height: 30px; }
+          width: 36px;
+          height: 36px; }
       .menu .left .menuItem span {
         display: flex;
         justify-content: center;
@@ -76,7 +76,7 @@ a {
     background-color: rgba(0, 0, 0, 0.4); }
   .menu.menu--open .left {
     width: 400px; }
-  .menu.menu--open [src="img/burger.png"] {
+  .menu.menu--open [name="burger"] {
     transition: 0.2s;
     transform: rotate(90deg); }
   .menu.menu--closed .darken {
@@ -84,7 +84,7 @@ a {
     display: none; }
   .menu.menu--closed .left {
     width: 60px; }
-  .menu.menu--closed [src="img/burger.png"] {
+  .menu.menu--closed [name="burger"] {
     transition: 0.2s;
     transform: rotate(0deg); }
 
@@ -112,14 +112,9 @@ a {
     display: inline-flex;
     justify-content: center;
     align-items: center; }
-  .word .yes, .word .no, .word .edit {
-    cursor: pointer; }
-  .word .yes {
-    background-color: #00ff00; }
-  .word .no {
-    background-color: #ff0000; }
-  .word .edit {
-    background-color: #0000ff; }
+
+.button {
+  cursor: pointer; }
 
 .viewer .word__word, .viewer .word__translation {
   transition: .2s; }
