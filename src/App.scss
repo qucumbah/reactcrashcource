@@ -1,0 +1,166 @@
+//Vars
+$menuLeftWidth: 400px;
+$menuIconWidth: 60px;
+
+$transitionDuration: .2s;
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.4;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: 100vh;
+}
+
+.menuPlaceholder {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: $menuIconWidth;
+  height: 100%;
+}
+
+.menu {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  .darken {
+    transition: $transitionDuration;
+    width: 100%;
+    height: 100%;
+  }
+  .left {
+    transition: $transitionDuration;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    background-color: white;
+
+    .menuItem {
+      position: relative;
+      width: $menuLeftWidth;
+      height: $menuIconWidth;
+      display: grid;
+      grid-template-columns: $menuIconWidth 1fr;
+      grid-auto-rows: $menuIconWidth;
+      cursor: pointer;
+
+      .imageContainer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border-right: 1px solid black;
+
+        img {
+          box-sizing: content-box;
+          width: $menuIconWidth*0.5;
+          height: $menuIconWidth*0.5;
+        }
+      }
+
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 1px;
+        top: 100%;
+        background-color: black;
+      }
+    }
+  }
+
+  &.menu--open {
+    .darken {
+      background-color: rgba(0,0,0,0.4);
+    }
+    .left {
+      width: $menuLeftWidth;
+    }
+
+    [src="img/burger.png"] {
+      transition: $transitionDuration;
+      transform: rotate(90deg);
+    }
+  }
+
+  &.menu--closed {
+    .darken {
+      background-color: rgba(0,0,0,0);
+    }
+    .left {
+      width: $menuIconWidth;
+    }
+
+    [src="img/burger.png"] {
+      transition: $transitionDuration;
+      transform: rotate(0deg);
+    }
+  }
+}
+
+.wordInput {
+  width: 100%;
+
+  input {
+    width: 50%;
+    height: 2rem;
+    font-size: 1.5rem;
+  }
+
+  button {
+    margin-top: 10px;
+    padding: 5px;
+    width: 100px;
+  }
+}
+
+.set {
+  margin-top: 50px;
+}
+
+.word {
+  border: 1px solid black;
+  background-color: #f4f4f4;
+  display: grid;
+  grid-template-columns: 1fr 1fr 50px 50px;
+
+  div {
+    height: 50px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .yes, .no, .edit {
+    cursor: pointer;
+  }
+
+  .yes  { background-color: #00ff00; }
+  .no   { background-color: #ff0000; }
+  .edit { background-color: #0000ff; }
+}
