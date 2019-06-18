@@ -72,14 +72,14 @@ a {
         top: 100%;
         background-color: black; }
   .menu.menu--open .darken {
-    opacity: .4; }
+    background-color: rgba(0, 0, 0, 0.4); }
   .menu.menu--open .left {
     width: 400px; }
   .menu.menu--open [src="img/burger.png"] {
     transition: 0.2s;
     transform: rotate(90deg); }
   .menu.menu--closed .darken {
-    opacity: 0;
+    background-color: rgba(0, 0, 0, 0);
     display: none; }
   .menu.menu--closed .left {
     width: 60px; }
@@ -98,7 +98,7 @@ a {
     padding: 5px;
     width: 100px; }
 
-.set {
+.setEditor .set {
   margin-top: 50px; }
 
 .word {

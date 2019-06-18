@@ -5,11 +5,10 @@ Tabs:
 	b. Word input; translation input
 	c. Remove word button
 2. Sets viewer
-	a. Lists all sets with empty spaces between them; the set viewer itself is the same as in 1.a
-	b. Indicator of how many times the set has been repeated
+	a. Lists all sets with empty spaces between them
+	b. Sets are wrapped in container with buttons "exercise" and "edit"
+	c. The set viewer itself is the same as in 1.a, but has an option to hide words/translations
+	d. Indicator of how many times the set has been repeated
 3. Set check
 	a. Gives foreign words one by one
 	b. "Show translation" button
-
-This cource:
-1st tab

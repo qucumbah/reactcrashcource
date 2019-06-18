@@ -98,7 +98,7 @@ a {
 
   &.menu--open {
     .darken {
-      opacity: .4;
+      background-color: rgba(0, 0, 0, 0.4);
     }
     .left {
       width: $menuLeftWidth;
@@ -112,8 +112,8 @@ a {
 
   &.menu--closed {
     .darken {
-      opacity: 0;
-      display: none;
+      background-color: rgba(0, 0, 0, 0);
+      display: none; //bad, no transition when closing menu
     }
     .left {
       width: $menuIconWidth;
@@ -142,8 +142,10 @@ a {
   }
 }
 
-.set {
-  margin-top: 50px;
+.setEditor {
+  .set {
+    margin-top: 50px;
+  }
 }
 
 .word {

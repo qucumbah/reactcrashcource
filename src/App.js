@@ -1,6 +1,8 @@
 import React from 'react';
 import Menu from './components/Menu.js';
 import SetEditor from './components/SetEditor.js';
+import Viewer from './components/Viewer.js';
+import Exercise from './components/Exercise.js';
 import './App.css';
 
 import TestComponent from './components/TestComponent.js';
@@ -28,21 +30,22 @@ class App extends React.Component {
       {
         name: "Set editor",
         imgPath: "img/pencil.png",
-        onClick: ()=>this.setPage("setEditor"),
+        onClick: ()=>this.setPage("editor"),
       },
       {
         name: "All sets",
         imgPath: "img/list.png",
-        onClick: ()=>this.setPage("setViewer"),
+        onClick: ()=>this.setPage("viewer"),
       },
       {
         name: "Exercise",
         imgPath: "img/book.png",
-        onClick: ()=>this.setPage("setChecker"),
+        onClick: ()=>this.setPage("exercise"),
       }
     ],
 
     menuOpen: false,
+    page: "editor",
   }
 
   addWord(word) {
@@ -54,6 +57,15 @@ class App extends React.Component {
   toggleMenu = () => {
     this.setState({
       menuOpen: !this.state.menuOpen
+    });
+  }
+
+  setPage(page) {
+    if (this.state.menuOpen) {
+      this.toggleMenu();
+    }
+    this.setState({
+      page,
     });
   }
 
@@ -73,6 +85,29 @@ class App extends React.Component {
   }
 
   render() {
+    let page;
+    switch (this.state.page) {
+      case "editor":
+        page = (
+          <SetEditor
+            set={this.state.sets[0]}
+            onWordAdd={word=>this.addWord(word)}
+            onSetChange={this.handleSetChange}
+          />
+        );
+      break;
+      case "viewer":
+        page = (
+          <Viewer />
+        );
+      break;
+      case "exercise":
+        page = (
+          <Exercise />
+        );
+      break;
+    }
+
     let result = (
       <div className="app">
         <div className="menuPlaceholder" />
@@ -81,11 +116,7 @@ class App extends React.Component {
           open={this.state.menuOpen}
           toggle={this.toggleMenu}
         />
-        <SetEditor
-          set={this.state.sets[0]}
-          onWordAdd={word=>this.addWord(word)}
-          onSetChange={this.handleSetChange}
-        />
+        {page}
       </div>
     );
     return result;
