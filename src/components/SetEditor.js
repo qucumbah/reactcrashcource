@@ -6,7 +6,10 @@ class SetEditor extends React.Component {
   render() {
     return (
       <div className="setEditor">
-        <WordInput onWordAdd={word=>this.props.onWordAdd(word)} />
+        <WordInput
+          set={this.props.set}
+          onSetChange={this.props.onSetChange}
+        />
         <Set set={this.props.set} onSetChange={this.props.onSetChange} />
       </div>
     );

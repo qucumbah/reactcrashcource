@@ -10,6 +10,7 @@ import './App.css';
 class App extends React.Component {
   state = {
     sets: [
+      /*
       {
         words: [
           {word: "fetch", translation: "=get"},
@@ -29,35 +30,9 @@ class App extends React.Component {
         progress: 2,
         id: 1,
       }
+      */
     ],
     nextId: 2,
-
-    menuItems: [
-      {
-        name: "",
-        //imgPath: "img/outline-menu-24px.svg",
-        iconName: "burger",
-        onClick: ()=>this.toggleMenu(),
-      },
-      {
-        name: "Set editor",
-        //imgPath: "img/outline-edit-24px.svg",
-        iconName: "edit",
-        onClick: ()=>this.setPage("editor"),
-      },
-      {
-        name: "All sets",
-        //imgPath: "img/outline-view_list-24px.svg",
-        iconName: "list",
-        onClick: ()=>this.setPage("viewer"),
-      },
-      {
-        name: "Exercise",
-        //imgPath: "img/outline-class-24px.svg",
-        iconName: "exercise",
-        onClick: ()=>this.setPage("exercise"),
-      }
-    ],
 
     curSet: 0,
     menuOpen: false,
@@ -66,6 +41,41 @@ class App extends React.Component {
     viewerSettings: {
       wordsHidden: false,
       translationsHidden: false,
+    }
+  }
+
+  menuItems = [
+    {
+      name: "",
+      //imgPath: "img/outline-menu-24px.svg",
+      iconName: "burger",
+      onClick: ()=>this.toggleMenu(),
+    },
+    {
+      name: "Set editor",
+      //imgPath: "img/outline-edit-24px.svg",
+      iconName: "edit",
+      onClick: ()=>this.setPage("editor"),
+    },
+    {
+      name: "All sets",
+      //imgPath: "img/outline-view_list-24px.svg",
+      iconName: "list",
+      onClick: ()=>this.setPage("viewer"),
+    },
+    {
+      name: "Exercise",
+      //imgPath: "img/outline-class-24px.svg",
+      iconName: "exercise",
+      onClick: ()=>this.setPage("exercise"),
+    }
+  ]
+
+  constructor(props) {
+    super(props);
+    this.state = JSON.parse(localStorage.getItem("appState"));
+    window.onbeforeunload = () => {
+      localStorage.setItem("appState", JSON.stringify(this.state));
     }
   }
 
@@ -94,19 +104,31 @@ class App extends React.Component {
       throw new Error(); // Handle error when we implement warning system
     }
 
-    if (action==="removal") {
-      newSet.words.splice(index, 1);
-      this.setState(newState);
-    } else if (action==="edition") {
-      newSet.words[index] = {
-        word: newWord,
-        translation: newTranslation,
-      };
-      this.setState(newState);
+    switch (action) {
+      case "removal":
+        newSet.words.splice(index, 1);
+      break;
+      case "addition":
+        newSet.words.push({
+          word: newWord,
+          translation: newTranslation,
+        });
+      break;
+      case "edition":
+        newSet.words[index] = {
+          word: newWord,
+          translation: newTranslation,
+        };
+      break;
+      default:
+        throw new Error("Unknown set change action");
+      break;
     }
+
+    this.setState(newState);
   }
 
-  addWord(word) {
+  addWord = word => {
     let i = this.state.sets[this.state.curSet].words.findIndex(w => {
       return w.word===word.word && w.translation===word.translation;
     });
@@ -168,7 +190,6 @@ class App extends React.Component {
         page = (
           <SetEditor
             set={this.state.sets[this.state.curSet]}
-            onWordAdd={word=>this.addWord(word)}
             onSetChange={this.handleSetChange}
           />
         );
@@ -202,7 +223,7 @@ class App extends React.Component {
       <div className="app">
         <div className="menuPlaceholder" />
         <Menu
-          items={this.state.menuItems}
+          items={this.menuItems}
           open={this.state.menuOpen}
           toggle={this.toggleMenu}
         />

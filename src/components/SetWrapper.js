@@ -1,5 +1,6 @@
 import React from 'react';
 import Set from './Set.js';
+import WordInput from './WordInput.js';
 import Button from './Button.js';
 
 class SetWrapper extends React.Component {
@@ -35,6 +36,10 @@ class SetWrapper extends React.Component {
           </div>
         </div>
         <Set set={this.props.set} onSetChange={this.props.onSetChange} />
+        <WordInput
+          set={this.props.set}
+          onSetChange={this.props.onSetChange}
+        />
       </div>
     )
   }

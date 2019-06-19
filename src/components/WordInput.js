@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './Button.js';
 
 class WordInput extends React.Component {
   constructor(props) {
@@ -9,18 +10,15 @@ class WordInput extends React.Component {
     };
   }
 
-  addWord() {
-    this.props.onWordAdd(
-      {word: this.state.word, translation: this.state.translation}
+  addWord = () => {
+    this.props.onSetChange(
+      this.props.set.id,
+      "addition",
+      0,
+      this.state.word,
+      this.state.translation
     );
-  }
-
-  handleAddition = () => {
-    this.addWord(this.state.word, this.state.translation);
-    this.setState({
-      word: "",
-      translation: "",
-    });
+    this.clearInput();
   }
 
   handleWordChange = e => {
@@ -31,6 +29,13 @@ class WordInput extends React.Component {
   handleTranslationChange = e => {
     this.setState({
       translation: e.target.value,
+    });
+  }
+
+  clearInput = () => {
+    this.setState({
+      word: "",
+      translation: "",
     });
   }
 
@@ -52,7 +57,8 @@ class WordInput extends React.Component {
       <div className="wordInput">
         {word}
         {translation}
-        <button onClick={this.handleAddition}>Add</button>
+        <Button iconName="yes" onClick={this.addWord} />
+        <Button iconName="no" onClick={this.clearInput} />
       </div>
     );
   }
