@@ -10,7 +10,6 @@ import './App.css';
 class App extends React.Component {
   state = {
     sets: [
-      /*
       {
         words: [
           {word: "fetch", translation: "=get"},
@@ -30,7 +29,6 @@ class App extends React.Component {
         progress: 2,
         id: 1,
       }
-      */
     ],
     nextId: 2,
 
@@ -71,6 +69,12 @@ class App extends React.Component {
     }
   ]
 
+  setPreset = {
+    words: [],
+    progress: 1,
+    id: -1,
+  }
+
   constructor(props) {
     super(props);
     this.state = JSON.parse(localStorage.getItem("appState"));
@@ -85,7 +89,7 @@ class App extends React.Component {
     });
   }
 
-  setPage(page) {
+  setPage = page => {
     if (this.state.menuOpen) {
       this.toggleMenu();
     }
@@ -109,6 +113,17 @@ class App extends React.Component {
         newSet.words.splice(index, 1);
       break;
       case "addition":
+        const i = newSet.words.findIndex(word => {
+          return word.word===newWord && word.translation===newTranslation;
+        });
+
+        // Handle errors when we implement warning system
+        if (i!==-1) {
+          return;
+        } else if (newWord==='' && newTranslation==='') {
+          return;
+        }
+
         newSet.words.push({
           word: newWord,
           translation: newTranslation,
@@ -122,14 +137,13 @@ class App extends React.Component {
       break;
       default:
         throw new Error("Unknown set change action");
-      break;
     }
 
     this.setState(newState);
   }
 
   addWord = word => {
-    let i = this.state.sets[this.state.curSet].words.findIndex(w => {
+    const i = this.state.sets[this.state.curSet].words.findIndex(w => {
       return w.word===word.word && w.translation===word.translation;
     });
     if (i!==-1) {
@@ -168,7 +182,6 @@ class App extends React.Component {
   }
 
   handleSetRemoval = setId => {
-    console.log("awaw");
     let newState = this.state;
     let newSetIndex = newState.sets.findIndex(set => {
       return set.id===setId;
@@ -181,6 +194,23 @@ class App extends React.Component {
     newState.sets.splice(newSetIndex, 1);
 
     this.setState(newState);
+  }
+
+  handleSetAddition = (initialWord, initialTranslation) => {
+    this.setState(newState => {
+      let newSet = JSON.parse(JSON.stringify(this.setPreset));
+      newSet.words.push(
+        {
+          word: initialWord,
+          translation: initialTranslation
+        }
+      );
+
+      newSet.id = newState.nextId++;
+
+      newState.sets.push(newSet);
+      return newState;
+    });
   }
 
   render() {
@@ -204,6 +234,7 @@ class App extends React.Component {
             onProgressChange={this.handleProgressChange}
             onSetEditorOpen={this.handleSetEditorOpen}
             onSetRemoval={this.handleSetRemoval}
+            onSetAddition={this.handleSetAddition}
           />
         );
       break;
