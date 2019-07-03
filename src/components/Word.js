@@ -8,6 +8,7 @@ class Word extends React.Component {
       process: "none",
       tempWord: props.word,
       tempTranslation: props.translation,
+      sliderOpen: false
     };
   }
 
@@ -38,13 +39,23 @@ class Word extends React.Component {
     this.props.onEdition(this.state.tempWord, this.state.tempTranslation);
   }
 
+  toggleSlider = () => {
+    this.setState({
+      sliderOpen: !this.state.sliderOpen
+    });
+  }
+
   render() {
     switch (this.state.process) {
       case "none":
         return (
           <div className="word">
-            <div className="word__word">{this.props.word}</div>
-            <div className="word__translation">{this.props.translation}</div>
+            <div className="word__word" onClick={this.toggleSlider}>
+                {this.props.word}
+            </div>
+            <div className="word__translation" onClick={this.toggleSlider}>
+              {this.props.translation}
+            </div>
             <Button iconName="edit" onClick={()=>this.setProcess("edition")} />
             <Button iconName="remove" onClick={()=>this.setProcess("removal")} />
           </div>
@@ -68,7 +79,7 @@ class Word extends React.Component {
             <Button iconName="no" onClick={this.cancelEdition} />
           </div>
         );
-      case "removal": //?
+      case "removal":
         return (
           <div className="word word--removal">
             <div style={{gridColumn: "span 2"}}>

@@ -82,8 +82,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    //const savedState = localStorage.getItem("appState");
-    const savedState = false;
+    const savedState = localStorage.getItem("appState");
     if (savedState) {
       this.state = JSON.parse(localStorage.getItem("appState"));
     }
