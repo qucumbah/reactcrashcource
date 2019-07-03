@@ -3,6 +3,7 @@ import Menu from './components/Menu.js';
 import SetEditor from './components/SetEditor.js';
 import Viewer from './components/Viewer.js';
 import Exercise from './components/Exercise.js';
+import Settings from './components/Settings.js';
 import './App.css';
 
 // import TestComponent from './components/TestComponent.js';
@@ -34,11 +35,15 @@ class App extends React.Component {
 
     curSet: 0,
     menuOpen: false,
-    page: "editor",
+    page: "viewer",
 
     viewerSettings: {
       wordsHidden: false,
       translationsHidden: false,
+    },
+
+    settings: {
+      instantRemoval: false,
     }
   }
 
@@ -48,12 +53,6 @@ class App extends React.Component {
       //imgPath: "img/outline-menu-24px.svg",
       iconName: "burger",
       onClick: ()=>this.toggleMenu(),
-    },
-    {
-      name: "Set editor",
-      //imgPath: "img/outline-edit-24px.svg",
-      iconName: "edit",
-      onClick: ()=>this.setPage("editor"),
     },
     {
       name: "All sets",
@@ -66,6 +65,12 @@ class App extends React.Component {
       //imgPath: "img/outline-class-24px.svg",
       iconName: "exercise",
       onClick: ()=>this.setPage("exercise"),
+    },
+    {
+      name: "Settings",
+      //imgPath: "img/outline-class-24px.svg",
+      iconName: "settings",
+      onClick: ()=>this.setPage("settings"),
     }
   ]
 
@@ -77,7 +82,11 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = JSON.parse(localStorage.getItem("appState"));
+    //const savedState = localStorage.getItem("appState");
+    const savedState = false;
+    if (savedState) {
+      this.state = JSON.parse(localStorage.getItem("appState"));
+    }
     window.onbeforeunload = () => {
       localStorage.setItem("appState", JSON.stringify(this.state));
     }
@@ -219,7 +228,7 @@ class App extends React.Component {
       case "editor":
         page = (
           <SetEditor
-            set={this.state.sets[this.state.curSet]}
+            set={this.state.sets.find(set=>set.id===this.state.curSet)}
             onSetChange={this.handleSetChange}
           />
         );
@@ -241,6 +250,11 @@ class App extends React.Component {
       case "exercise":
         page = (
           <Exercise />
+        );
+      break;
+      case "settings":
+        page = (
+          <Settings />
         );
       break;
       default:

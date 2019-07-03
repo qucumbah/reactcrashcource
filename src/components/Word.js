@@ -11,29 +11,29 @@ class Word extends React.Component {
     };
   }
 
-  setProcess(process) {
+  setProcess = process => {
     this.setState({process});
   }
 
-  handleWordEdition(e) {
+  handleWordEdition = e => {
     this.setState({
       tempWord: e.target.value
     });
   }
-  handleTranslationEdition(e) {
+  handleTranslationEdition = e => {
     this.setState({
       tempTranslation: e.target.value
     });
   }
 
-  cancelEdition() {
+  cancelEdition = () => {
     this.setState({
       process: "none",
       tempWord: this.props.word,
       tempTranslation: this.props.translation,
     });
   }
-  applyEdition() {
+  applyEdition = () => {
     this.setProcess("none");
     this.props.onEdition(this.state.tempWord, this.state.tempTranslation);
   }
@@ -53,22 +53,22 @@ class Word extends React.Component {
         let wordInput = (
           <input
             value={this.state.tempWord}
-            onChange={e=>this.handleWordEdition(e)}
+            onChange={this.handleWordEdition}
           />);
         let translationInput = (
           <input
             value={this.state.tempTranslation}
-            onChange={e=>this.handleTranslationEdition(e)}
+            onChange={this.handleTranslationEdition}
           />);
         return (
           <div className="word word--edition">
             {wordInput}
             {translationInput}
-            <Button iconName="yes" onClick={()=>this.applyEdition()} />
-            <Button iconName="no" onClick={()=>this.cancelEdition()} />
+            <Button iconName="yes" onClick={this.applyEdition} />
+            <Button iconName="no" onClick={this.cancelEdition} />
           </div>
         );
-      case "removal":
+      case "removal": //?
         return (
           <div className="word word--removal">
             <div style={{gridColumn: "span 2"}}>
@@ -79,7 +79,7 @@ class Word extends React.Component {
           </div>
         );
       default:
-        return null;
+        return <div>Something went wrong</div>;
     }
   }
 }

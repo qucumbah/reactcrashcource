@@ -11,6 +11,7 @@ class Button extends React.Component {
       "yes": "img/outline-check_circle_outline-24px.svg",
       "no": "img/outline-highlight_off-24px.svg",
       "remove": "img/outline-delete-24px.svg",
+      "settings": "img/outline-settings-24px.svg",
     }
   }
 

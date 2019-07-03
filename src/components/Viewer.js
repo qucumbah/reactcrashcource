@@ -20,11 +20,11 @@ class Viewer extends React.Component {
           onSetRemoval={this.props.onSetRemoval}
         />
       );
-    });
+    }).reverse();
 
     const setCreator = (
       <WordInput
-        set={{ id: -1 }} // Not needed
+        set={{ id: -1 }} // Not needed, we will create new set with new id
         onSetChange={this.handleSetAddition}
       />
     );

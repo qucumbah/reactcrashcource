@@ -4,6 +4,17 @@ import WordInput from './WordInput.js';
 import Button from './Button.js';
 
 class SetWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      process: "none",
+    };
+  }
+
+  setProcess = process => {
+    this.setState({process});
+  }
+
   render() {
     let progressItems = [];
 
@@ -17,6 +28,35 @@ class SetWrapper extends React.Component {
       );
     }
 
+    let buttons;
+    //OK: ()=>this.props.onSetRemoval(this.props.set.id)
+    switch (this.state.process) {
+      case "none":
+        buttons = (
+          <Button
+            iconName="remove"
+            onClick={()=>this.setProcess("removal")}
+          />
+        );
+      break;
+      case "removal":
+        buttons = [
+          (<Button
+            key="yes"
+            iconName="yes"
+            onClick={()=>this.props.onSetRemoval(this.props.set.id)}
+          />),
+          (<Button
+            key="no"
+            iconName="no"
+            onClick={()=>this.setProcess("none")}
+          />)
+        ];
+      break;
+      default:
+        buttons = <div>Something went wrong</div>;
+    }
+
     return (
       <div className="setWrapper">
         <div className="upperPanel">
@@ -25,14 +65,7 @@ class SetWrapper extends React.Component {
             <span>{this.props.set.progress}/10</span>
           </div>
           <div className="buttons">
-            <Button
-              iconName="edit"
-              onClick={()=>this.props.onSetEditorOpen(this.props.set.id)}
-            />
-            <Button
-              iconName="remove"
-              onClick={()=>this.props.onSetRemoval(this.props.set.id)}
-            />
+            {buttons}
           </div>
         </div>
         <Set set={this.props.set} onSetChange={this.props.onSetChange} />
