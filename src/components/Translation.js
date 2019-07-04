@@ -6,6 +6,7 @@ class Translation extends React.Component {
     this.state = {
       word: props.word,
       currentTimeout: null,
+      translations: null,
     }
   }
 
@@ -13,7 +14,7 @@ class Translation extends React.Component {
     e.persist();
     this.setState(state => {
       clearTimeout(state.currentTimeout);
-      const newTimeout = setTimeout(this.updateTranslation, 1000);
+      const newTimeout = setTimeout(this.updateTranslation, 500);
       return {
         word: e.target.value,
         currentTimeout: newTimeout,
@@ -21,20 +22,46 @@ class Translation extends React.Component {
     });
   }
 
-  updateTranslation = () => {
-    const request = fetch("https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=en-ru&text="+this.props.word);
+  updateTranslation = async () => {
+    if (!this.state.word) {
+      this.setState({ translations: null });
+      return;
+    }
 
-    request.then(result => console.log(result.json().then(console.log)));
+    const request = await fetch("https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=en-ru&text="+this.state.word);
+    const obj = await request.json();
+
+    this.setState({ translations: obj.def });
   }
 
+  //pos = part of speech
   render() {
+    let partsOfSpeech;
+    if (this.state.translations) {
+      partsOfSpeech = this.state.translations.map(pos => {
+        const posName = pos.pos;
+        const translations = pos.tr.map(translation => {
+          const text = translation.text;
+          return <span key={posName+text}>{text}; </span>;
+        })
+
+        return (
+          <div className="partOfSpeech" key={posName}>
+            <b>{posName}</b>: {translations}
+          </div>
+        );
+      });
+    } else {
+
+    }
+
     return (
       <div className="translation">
         <input
           value={this.state.word}
           onChange={this.handleEdition}
         />
-        <p>{this.state.translationText}</p>
+        {partsOfSpeech}
       </div>
     );
   }
