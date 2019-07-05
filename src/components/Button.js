@@ -12,6 +12,7 @@ class Button extends React.Component {
       "no": "img/outline-highlight_off-24px.svg",
       "remove": "img/outline-delete-24px.svg",
       "settings": "img/outline-settings-24px.svg",
+      "translate": "img/baseline-translate-24px.svg",
     }
   }
 

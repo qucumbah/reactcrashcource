@@ -28,10 +28,17 @@ class Translation extends React.Component {
       return;
     }
 
-    const request = await fetch("https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=en-ru&text="+this.state.word);
+    //const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=${this.props.settings.languageFrom}-${this.props.settings.languageTo}&text=`+this.state.word);
+    const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=en-en&text=`+this.state.word);
     const obj = await request.json();
 
+    console.log(obj);
+
     this.setState({ translations: obj.def });
+  }
+
+  componentDidMount() {
+    this.updateTranslation();
   }
 
   //pos = part of speech
@@ -42,11 +49,11 @@ class Translation extends React.Component {
         const posName = pos.pos;
         const translations = pos.tr.map(translation => {
           const text = translation.text;
-          return <span key={posName+text}>{text}; </span>;
+          return <span key={posName+text}>{text};</span>;
         })
 
         return (
-          <div className="partOfSpeech" key={posName}>
+          <div key={posName+this.props.word} className="partOfSpeech">
             <b>{posName}</b>: {translations}
           </div>
         );

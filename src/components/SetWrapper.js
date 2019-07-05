@@ -1,6 +1,7 @@
 import React from 'react';
 import Set from './Set.js';
-import WordInput from './WordInput.js';
+//import WordInput from './WordInput.js';
+import Word from './Word.js';
 import Button from './Button.js';
 
 class SetWrapper extends React.Component {
@@ -13,6 +14,16 @@ class SetWrapper extends React.Component {
 
   setProcess = process => {
     this.setState({process});
+  }
+
+  handleSetChange = (word, translation) => {
+    this.props.onSetChange(
+      this.props.set.id,
+      "addition",
+      0,
+      word,
+      translation
+    );
   }
 
   render() {
@@ -69,12 +80,20 @@ class SetWrapper extends React.Component {
           </div>
         </div>
         <Set set={this.props.set} onSetChange={this.props.onSetChange} />
-        <WordInput
-          set={this.props.set}
-          onSetChange={this.props.onSetChange}
+        <Word
+          onEdition={this.handleSetChange}
+          word=""
+          translation=""
+          inputOnly={true}
         />
       </div>
     )
+    /* old word input
+    <WordInput
+      set={this.props.set}
+      onSetChange={this.props.onSetChange}
+    />
+    */
   }
 }
 

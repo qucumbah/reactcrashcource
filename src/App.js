@@ -37,41 +37,36 @@ class App extends React.Component {
     menuOpen: false,
     page: "viewer",
 
-    viewerSettings: {
+    settings: {
       wordsHidden: false,
       translationsHidden: false,
-    },
-
-    settings: {
       instantRemoval: false,
+      languageTo: "en",
+      languageFrom: "en"
     }
   }
 
   menuItems = [
     {
       name: "",
-      //imgPath: "img/outline-menu-24px.svg",
       iconName: "burger",
       onClick: ()=>this.toggleMenu(),
     },
     {
       name: "All sets",
-      //imgPath: "img/outline-view_list-24px.svg",
       iconName: "list",
       onClick: ()=>this.setPage("viewer"),
     },
     {
       name: "Exercise",
-      //imgPath: "img/outline-class-24px.svg",
       iconName: "exercise",
       onClick: ()=>this.setPage("exercise"),
     },
     {
       name: "Settings",
-      //imgPath: "img/outline-class-24px.svg",
       iconName: "settings",
       onClick: ()=>this.setPage("settings"),
-    }
+    },
   ]
 
   setPreset = {
@@ -221,6 +216,15 @@ class App extends React.Component {
     });
   }
 
+  onSettingsChange = (key, value) => {
+    const newSettings = this.state.settings;
+    newSettings[key] = value;
+
+    this.setState({
+      settings: newSettings
+    });
+  }
+
   render() {
     let page;
     switch (this.state.page) {
@@ -236,8 +240,8 @@ class App extends React.Component {
         page = (
           <Viewer
             sets={this.state.sets}
-            settings={this.state.viewerSettings}
-            onSettingsChange={this.changeViewerSettings}
+            settings={this.state.settings}
+            onSettingsChange={this.onSettingsChange}
             onSetChange={this.handleSetChange}
             onProgressChange={this.handleProgressChange}
             onSetEditorOpen={this.handleSetEditorOpen}
@@ -253,7 +257,9 @@ class App extends React.Component {
       break;
       case "settings":
         page = (
-          <Settings />
+          <Settings
+            onSettingsChange={this.onSettingsChange}
+          />
         );
       break;
       default:

@@ -135,7 +135,7 @@ a {
   border: 1px solid black;
   background-color: $wordBackgroundColor;
   display: grid;
-  grid-template-columns: 1fr 1fr 50px 50px;
+  grid-template-columns: 50px 1fr 1fr 50px 50px;
 
   input {
     height: 50px;
@@ -163,13 +163,34 @@ a {
   border: 1px solid black;
   background-color: $wordBackgroundColor;
   display: grid;
-  grid-template-columns: 1fr 1fr 50px 50px;
+  grid-template-columns: 50px 1fr 1fr 50px 50px;
 
-  div {
+  .button,
+  .word__word,
+  .word__translation {
     height: 50px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.translation {
+  grid-column: span 4;
+}
+
+.settings {
+  .from, .to {
+    width: 200px;
+    height: 300px;
+    overflow: scroll;
+
+    .option {
+      display: flex;
+      align-items: center;
+      border: 1px solid black;
+      cursor: pointer;
+    }
   }
 }
 

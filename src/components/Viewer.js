@@ -1,7 +1,8 @@
 import React from 'react';
 import ViewerSettings from './ViewerSettings.js';
 import SetWrapper from './SetWrapper.js';
-import WordInput from './WordInput.js';
+//import WordInput from './WordInput.js';
+import Word from './Word.js';
 
 class Viewer extends React.Component {
   handleSetAddition = (setId, action, index, word, translation) => {
@@ -23,10 +24,18 @@ class Viewer extends React.Component {
     }).reverse();
 
     const setCreator = (
+      <Word
+        onEdition={this.props.onSetAddition}
+        word=""
+        translation=""
+        inputOnly={true}
+      />
+      /*
       <WordInput
         set={{ id: -1 }} // Not needed, we will create new set with new id
         onSetChange={this.handleSetAddition}
       />
+      */
     );
 
     let className = "viewer";

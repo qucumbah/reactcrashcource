@@ -1,20 +1,21 @@
 import React from 'react';
 
 class ViewerSettings extends React.Component {
+  state = {
+    wordsHidden: this.props.settings.wordsHidden,
+    translationsHidden: this.props.settings.translationsHidden,
+  }
+
   onWordVisibilityChange = e => {
-    let translationsHidden = this.props.settings.translationsHidden;
-    let wordsHidden = e.target.checked;
-    this.props.onSettingsChange(
-      {wordsHidden, translationsHidden}
-    );
+    const wordsHidden = e.target.checked;
+    this.setState({ wordsHidden });
+    this.props.onSettingsChange("wordsHidden", wordsHidden);
   }
 
   onTranslationVisibilityChange = e => {
-    let translationsHidden = e.target.checked;
-    let wordsHidden = this.props.settings.wordsHidden;
-    this.props.onSettingsChange(
-      {wordsHidden, translationsHidden}
-    );
+    const translationsHidden = e.target.checked;
+    this.setState({ translationsHidden });
+    this.props.onSettingsChange("translationsHidden", translationsHidden);
   }
 
   render() {
@@ -24,7 +25,7 @@ class ViewerSettings extends React.Component {
           <input
             id="hideWords"
             type="checkbox"
-            checked={this.props.settings.wordsHidden}
+            checked={this.state.wordsHidden}
             onChange={this.onWordVisibilityChange}
           />
           <span>Hide words</span>
@@ -33,7 +34,7 @@ class ViewerSettings extends React.Component {
           <input
             id="hideTranslations"
             type="checkbox"
-            checked={this.props.settings.translationsHidden}
+            checked={this.state.translationsHidden}
             onChange={this.onTranslationVisibilityChange}
           />
           <span>Hide translations</span>

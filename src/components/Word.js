@@ -1,11 +1,12 @@
 import React from 'react';
 import Button from './Button.js';
+import Translation from './Translation.js';
 
 class Word extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      process: "none",
+      process: props.inputOnly?"edition":"none",
       tempWord: props.word,
       tempTranslation: props.translation,
       sliderOpen: false
@@ -13,7 +14,10 @@ class Word extends React.Component {
   }
 
   setProcess = process => {
-    this.setState({process});
+    if (this.props.inputOnly) {
+      return;
+    }
+    this.setState({ process });
   }
 
   handleWordEdition = e => {
@@ -28,8 +32,9 @@ class Word extends React.Component {
   }
 
   cancelEdition = () => {
+    this.setProcess("none");
+    //reset inputs to initial values
     this.setState({
-      process: "none",
       tempWord: this.props.word,
       tempTranslation: this.props.translation,
     });
@@ -37,6 +42,12 @@ class Word extends React.Component {
   applyEdition = () => {
     this.setProcess("none");
     this.props.onEdition(this.state.tempWord, this.state.tempTranslation);
+    if (this.props.inputOnly) {
+      this.setState({
+        tempWord: "",
+        tempTranslation: "",
+      });
+    }
   }
 
   toggleSlider = () => {
@@ -46,18 +57,30 @@ class Word extends React.Component {
   }
 
   render() {
+    const translationSlider = (!this.state.sliderOpen)?null:(
+      <Translation
+        key={this.props.word+this.props.translation}
+        word={this.props.word}
+      />
+    );
+
     switch (this.state.process) {
       case "none":
         return (
-          <div className="word">
-            <div className="word__word" onClick={this.toggleSlider}>
+          <div className="word word--noprocess">
+            <Button
+              iconName="translate"
+              onClick={()=>this.toggleSlider()}
+            />
+            <div className="word__word">
                 {this.props.word}
             </div>
-            <div className="word__translation" onClick={this.toggleSlider}>
+            <div className="word__translation">
               {this.props.translation}
             </div>
             <Button iconName="edit" onClick={()=>this.setProcess("edition")} />
             <Button iconName="remove" onClick={()=>this.setProcess("removal")} />
+            {translationSlider}
           </div>
         );
       case "edition":
@@ -73,20 +96,30 @@ class Word extends React.Component {
           />);
         return (
           <div className="word word--edition">
+            <Button
+              iconName="translate"
+              onClick={()=>this.toggleSlider()}
+            />
             {wordInput}
             {translationInput}
             <Button iconName="yes" onClick={this.applyEdition} />
             <Button iconName="no" onClick={this.cancelEdition} />
+            {translationSlider}
           </div>
         );
       case "removal":
         return (
           <div className="word word--removal">
+            <Button
+              iconName="translate"
+              onClick={()=>this.toggleSlider()}
+            />
             <div style={{gridColumn: "span 2"}}>
               Are you sure you want to delete the word {this.props.word}?
             </div>
             <Button iconName="yes" onClick={()=>this.props.onRemoval()} />
             <Button iconName="no" onClick={()=>this.setProcess("none")} />
+            {translationSlider}
           </div>
         );
       default:

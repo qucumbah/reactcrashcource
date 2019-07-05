@@ -39,6 +39,12 @@ class WordInput extends React.Component {
     });
   }
 
+  toggleSlider = () => {
+    this.setState({
+      sliderOpen: !this.state.sliderOpen
+    });
+  }
+
   render() {
     let word = <input
       type="text"
@@ -55,6 +61,10 @@ class WordInput extends React.Component {
 
     return (
       <div className="wordInput">
+        <Button
+          iconName="translate"
+          onClick={()=>this.toggleSlider()}
+        />
         {word}
         {translation}
         <Button iconName="yes" onClick={this.addWord} />
