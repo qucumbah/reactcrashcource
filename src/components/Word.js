@@ -114,7 +114,7 @@ class Word extends React.Component {
               iconName="translate"
               onClick={()=>this.toggleSlider()}
             />
-            <div style={{gridColumn: "span 2"}}>
+            <div className="removalQuestion">
               Are you sure you want to delete the word {this.props.word}?
             </div>
             <Button iconName="yes" onClick={()=>this.props.onRemoval()} />

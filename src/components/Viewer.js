@@ -4,6 +4,8 @@ import SetWrapper from './SetWrapper.js';
 //import WordInput from './WordInput.js';
 import Word from './Word.js';
 
+import { connect } from 'react-redux';
+
 class Viewer extends React.Component {
   handleSetAddition = (setId, action, index, word, translation) => {
     this.props.onSetAddition(word, translation);
@@ -48,10 +50,7 @@ class Viewer extends React.Component {
 
     return (
       <div className={className}>
-        <ViewerSettings
-          onSettingsChange={this.props.onSettingsChange}
-          settings={this.props.settings}
-        />
+        <ViewerSettings />
         <div className="setWrappers">
           <div className="setWrapper newSetCreator">
             <div className="description">
@@ -66,4 +65,8 @@ class Viewer extends React.Component {
   }
 }
 
-export default Viewer;
+const mapStateToProps = state => ({
+  settings: state
+});
+
+export default connect(mapStateToProps)(Viewer);

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 class Translation extends React.Component {
   constructor(props) {
     super(props);
@@ -28,8 +30,8 @@ class Translation extends React.Component {
       return;
     }
 
-    //const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=${this.props.settings.languageFrom}-${this.props.settings.languageTo}&text=`+this.state.word);
-    const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=en-en&text=`+this.state.word);
+    const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=${this.props.settings.languageFrom}-${this.props.settings.languageTo}&text=`+this.state.word);
+    //const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=en-en&text=`+this.state.word);
     const obj = await request.json();
 
     console.log(obj);
@@ -44,7 +46,11 @@ class Translation extends React.Component {
   //pos = part of speech
   render() {
     let partsOfSpeech;
-    if (this.state.translations) {
+    if (!this.state.translations) {
+      partsOfSpeech = <div>...</div>;
+    } else if (this.state.translations.length===0) {
+      partsOfSpeech = <div>Unknown word</div>;
+    } else {
       partsOfSpeech = this.state.translations.map(pos => {
         const posName = pos.pos;
         const translations = pos.tr.map(translation => {
@@ -58,8 +64,6 @@ class Translation extends React.Component {
           </div>
         );
       });
-    } else {
-
     }
 
     return (
@@ -74,4 +78,8 @@ class Translation extends React.Component {
   }
 }
 
-export default Translation;
+const mapStateToProps = state => ({
+  settings: state
+});
+
+export default connect(mapStateToProps)(Translation);
