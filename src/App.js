@@ -232,7 +232,7 @@ class App extends React.Component {
   }
 
   componentWillMount = () => {
-    const initialState = Object.assign({}, this.state.settings);;
+    const initialState = Object.assign({}, this.state.settings);
 
     const reducer = (state = initialState, action) => {
       switch (action.type) {
