@@ -4,9 +4,11 @@ import SetEditor from './components/SetEditor.js';
 import Viewer from './components/Viewer.js';
 import Exercise from './components/Exercise.js';
 import Settings from './components/Settings.js';
-import './App.css';
 
-// import TestComponent from './components/TestComponent.js';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+import './App.css';
 
 class App extends React.Component {
   state = {
@@ -225,6 +227,21 @@ class App extends React.Component {
     });
   }
 
+  componentWillMount = () => {
+    const initialState = this.state.settings;
+
+    const reducer = (state = initialState, action) => {
+      switch (action.type) {
+        case "SETTINGSCHANGE":
+          this.onSettingsChange(action.key, action.value);
+        default:
+          return Object.assign({}, this.state.settings);
+      }
+    }
+
+    this.store = createStore(reducer);
+  }
+
   render() {
     let page;
     switch (this.state.page) {
@@ -240,8 +257,6 @@ class App extends React.Component {
         page = (
           <Viewer
             sets={this.state.sets}
-            settings={this.state.settings}
-            onSettingsChange={this.onSettingsChange}
             onSetChange={this.handleSetChange}
             onProgressChange={this.handleProgressChange}
             onSetEditorOpen={this.handleSetEditorOpen}
@@ -257,9 +272,7 @@ class App extends React.Component {
       break;
       case "settings":
         page = (
-          <Settings
-            onSettingsChange={this.onSettingsChange}
-          />
+          <Settings />
         );
       break;
       default:
@@ -270,15 +283,17 @@ class App extends React.Component {
     }
 
     let result = (
-      <div className="app">
-        <div className="menuPlaceholder" />
-        <Menu
-          items={this.menuItems}
-          open={this.state.menuOpen}
-          toggle={this.toggleMenu}
-        />
-        {page}
-      </div>
+      <Provider store={this.store}>
+        <div className="app">
+          <div className="menuPlaceholder" />
+          <Menu
+            items={this.menuItems}
+            open={this.state.menuOpen}
+            toggle={this.toggleMenu}
+          />
+          {page}
+        </div>
+      </Provider>
     );
     return result;
   }

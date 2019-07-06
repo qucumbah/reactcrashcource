@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 class Translation extends React.Component {
   constructor(props) {
     super(props);
@@ -28,8 +30,8 @@ class Translation extends React.Component {
       return;
     }
 
-    //const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=${this.props.settings.languageFrom}-${this.props.settings.languageTo}&text=`+this.state.word);
-    const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=en-en&text=`+this.state.word);
+    const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=${this.props.settings.languageFrom}-${this.props.settings.languageTo}&text=`+this.state.word);
+    //const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=en-en&text=`+this.state.word);
     const obj = await request.json();
 
     console.log(obj);
@@ -74,4 +76,8 @@ class Translation extends React.Component {
   }
 }
 
-export default Translation;
+const mapStateToProps = state => ({
+  settings: state
+});
+
+export default connect(mapStateToProps)(Translation);
