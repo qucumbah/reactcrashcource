@@ -4,7 +4,7 @@ import SetWrapper from './SetWrapper.js';
 //import WordInput from './WordInput.js';
 import Word from './Word.js';
 
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 
 class Viewer extends React.Component {
   handleSetAddition = (setId, action, index, word, translation) => {
@@ -67,8 +67,14 @@ class Viewer extends React.Component {
   }
 }
 
+export default Viewer;
+/*
+
+//Component wouldn't update if sets changed; probably redux bug
+
 const mapStateToProps = state => ({
   settings: state
 });
 
 export default connect(mapStateToProps)(Viewer);
+*/
