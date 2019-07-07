@@ -4,90 +4,169 @@
   padding: 0px; }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.4; }
+  font-family: Arial, Helvetica, sans-serif; }
 
 a {
   color: #333;
   text-decoration: none; }
 
+.container {
+  height: 100%;
+  max-width: 1280px;
+  margin: 0 auto; }
+
+.app {
+  position: relative; }
+
+/*
 .app {
   display: grid;
   grid-template-columns: auto 1fr;
-  height: 100vh; }
+  height: 100vh;
+}
 
 .menuPlaceholder {
   position: relative;
   top: 0;
   left: 0;
-  width: 60px;
-  height: 100%; }
+  width: $menuIconWidth;
+  height: 100%;
+}
+*/
+.menu, .menuPlaceholder {
+  width: 100%;
+  height: 80px; }
 
 .menu {
   position: fixed;
-  width: auto;
-  height: 100%; }
+  left: 0;
+  top: 0;
+  background-color: #168AE3; }
   .menu .darken {
-    transition: 0.2s;
+    display: none; }
+  .menu .container {
+    display: flex;
+    justify-content: space-between; }
+  .menu .left {
+    display: flex;
+    justify-content: flex-start; }
+  .menu .right {
+    display: flex;
+    justify-content: flex-end; }
+  .menu .menuItem {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin: 0 15px; }
+    .menu .menuItem .button {
+      display: block;
+      width: 30px;
+      height: 30px; }
+      .menu .menuItem .button img {
+        width: 30px;
+        height: 30px;
+        filter: invert(100%); }
+    .menu .menuItem .name {
+      font-size: 24px; }
+    .menu .menuItem#menuItem--burger {
+      display: none; }
+
+/*
+.menu {
+  position: fixed;
+  width: auto;
+  height: 100%;
+
+  .darken {
+    transition: $transitionDuration;
     position: fixed;
     width: 100%;
     height: 100%;
-    background-color: black; }
-  .menu .left {
-    transition: 0.2s;
+    background-color: black;
+  }
+  .left {
+    transition: $transitionDuration;
     height: 100%;
     position: absolute;
     top: 0;
     overflow: hidden;
     background-color: white;
-    border-right: 1px solid black; }
-    .menu .left .menuItem {
+    border-right: 1px solid black;
+
+    .menuItem {
       position: relative;
-      width: 400px;
-      height: 60px;
+      width: $menuLeftWidth;
+      height: $menuIconWidth;
       display: grid;
-      grid-template-columns: 60px 1fr;
-      grid-auto-rows: 60px;
-      cursor: pointer; }
-      .menu .left .menuItem .button {
+      grid-template-columns: $menuIconWidth 1fr;
+      grid-auto-rows: $menuIconWidth;
+      cursor: pointer;
+
+      .button {
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-right: 1px solid black; }
-        .menu .left .menuItem .button img {
+
+        border-right: 1px solid black;
+
+        img {
           box-sizing: content-box;
-          width: 36px;
-          height: 36px; }
-      .menu .left .menuItem span {
+          width: $menuIconWidth*0.6;
+          height: $menuIconWidth*0.6;
+        }
+      }
+
+      span {
         display: flex;
         justify-content: center;
-        align-items: center; }
-      .menu .left .menuItem::after {
+        align-items: center;
+      }
+      &::after {
         content: "";
         position: absolute;
         display: block;
         width: 100%;
         height: 1px;
         top: 100%;
-        background-color: black; }
-  .menu.menu--open .darken {
-    background-color: rgba(0, 0, 0, 0.4); }
-  .menu.menu--open .left {
-    width: 400px; }
-  .menu.menu--open [name="burger"] {
-    transition: 0.2s;
-    transform: rotate(180deg); }
-  .menu.menu--closed .darken {
-    background-color: rgba(0, 0, 0, 0);
-    display: none; }
-  .menu.menu--closed .left {
-    width: 60px; }
-  .menu.menu--closed [name="burger"] {
-    transition: 0.2s;
-    transform: rotate(0deg); }
+        background-color: black;
+      }
+    }
+  }
 
+  &.menu--open {
+    .darken {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .left {
+      width: $menuLeftWidth;
+    }
+
+    [name="burger"] {
+      transition: $transitionDuration;
+      transform: rotate(180deg);
+    }
+  }
+
+  &.menu--closed {
+    .darken {
+      background-color: rgba(0, 0, 0, 0);
+      display: none; //bad, no transition when closing menu
+    }
+    .left {
+      width: $menuIconWidth;
+    }
+
+    [name="burger"] {
+      transition: $transitionDuration;
+      transform: rotate(0deg);
+    }
+  }
+}
+*/
 .wordInput {
   width: 100%;
   border: 1px solid black;

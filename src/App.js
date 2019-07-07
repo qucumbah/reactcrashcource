@@ -238,9 +238,10 @@ class App extends React.Component {
       switch (action.type) {
         case "SETTINGSCHANGE":
           this.onSettingsChange(action.key, action.value);
+        break;
         default:
-          return Object.assign({}, this.state.settings);
       }
+      return Object.assign({}, this.state.settings);
     }
 
     this.store = createStore(reducer);
@@ -288,7 +289,7 @@ class App extends React.Component {
 
     let result = (
       <Provider store={this.store}>
-        <div className="app">
+        <div className="app container">
           <div className="menuPlaceholder" />
           <Menu
             items={this.menuItems}
