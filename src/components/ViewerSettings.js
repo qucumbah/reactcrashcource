@@ -1,21 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class ViewerSettings extends React.Component {
-  state = {
-    wordsHidden: this.props.settings.wordsHidden,
-    translationsHidden: this.props.settings.translationsHidden,
-  }
-
   onWordVisibilityChange = e => {
     const wordsHidden = e.target.checked;
-    this.setState({ wordsHidden });
-    this.props.onSettingsChange("wordsHidden", wordsHidden);
+    //this.props.onSettingsChange("wordsHidden", wordsHidden);
+    this.props.dispatch({
+      type: "SETTINGSCHANGE",
+      key: "wordsHidden",
+      value: wordsHidden
+    });
   }
 
   onTranslationVisibilityChange = e => {
     const translationsHidden = e.target.checked;
-    this.setState({ translationsHidden });
-    this.props.onSettingsChange("translationsHidden", translationsHidden);
+    //this.props.onSettingsChange("translationsHidden", translationsHidden);
+    this.props.dispatch({
+      type: "SETTINGSCHANGE",
+      key: "translationsHidden",
+      value: translationsHidden
+    });
   }
 
   render() {
@@ -25,7 +29,7 @@ class ViewerSettings extends React.Component {
           <input
             id="hideWords"
             type="checkbox"
-            checked={this.state.wordsHidden}
+            checked={this.props.settings.wordsHidden}
             onChange={this.onWordVisibilityChange}
           />
           <span>Hide words</span>
@@ -34,7 +38,7 @@ class ViewerSettings extends React.Component {
           <input
             id="hideTranslations"
             type="checkbox"
-            checked={this.state.translationsHidden}
+            checked={this.props.settings.translationsHidden}
             onChange={this.onTranslationVisibilityChange}
           />
           <span>Hide translations</span>
@@ -44,4 +48,8 @@ class ViewerSettings extends React.Component {
   }
 }
 
-export default ViewerSettings;
+const mapStateToProps = state => ({
+  settings: state
+});
+
+export default connect(mapStateToProps)(ViewerSettings);

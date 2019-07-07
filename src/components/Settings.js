@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 class Settings extends React.Component {
   constructor(props) {
     super(props);
@@ -39,7 +41,13 @@ class Settings extends React.Component {
         <div
           key={"from"+lang.name}
           className="option"
-          onClick={()=>this.props.onSettingsChange('languageFrom', lang.name)}
+          onClick={()=>this.props.dispatch(
+            {
+              type: "SETTINGSCHANGE",
+              key: "languageFrom",
+              value: lang.name
+            }
+          )}
         >
           <img
             src={`https://www.countryflags.io/${lang.flag}/flat/64.png`}
@@ -54,7 +62,13 @@ class Settings extends React.Component {
         <div
           key={"to"+lang.name}
           className="option"
-          onClick={()=>this.props.onSettingsChange('languageTo', lang.name)}
+          onClick={()=>this.props.dispatch(
+            {
+              type: "SETTINGSCHANGE",
+              key: "languageTo",
+              value: lang.name
+            }
+          )}
         >
           <img
             src={`https://www.countryflags.io/${lang.flag}/flat/64.png`}
@@ -69,11 +83,11 @@ class Settings extends React.Component {
       <div className="settings">
         <label htmlFor="name">Checkbox</label>
         <input type="checkbox" id="name" />
-        <div>Language you learn: </div>
+        <div>Language you learn: {this.props.settings.languageFrom}</div>
         <div className="from">
           {optionsFrom}
         </div>
-        <div>Language to translate to: {this.props.languageTo}</div>
+        <div>Language to translate to: {this.props.settings.languageTo}</div>
         <div>(set the same as you learn if you only want definitions)</div>
         <div className="to">
           {optionsTo}
@@ -83,4 +97,8 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+const mapStateToProps = state => ({
+  settings: state
+});
+
+export default connect(mapStateToProps)(Settings);

@@ -4,6 +4,8 @@ import SetWrapper from './SetWrapper.js';
 //import WordInput from './WordInput.js';
 import Word from './Word.js';
 
+import { connect } from 'react-redux';
+
 class Viewer extends React.Component {
   handleSetAddition = (setId, action, index, word, translation) => {
     this.props.onSetAddition(word, translation);
@@ -39,19 +41,18 @@ class Viewer extends React.Component {
     );
 
     let className = "viewer";
+    /*
     if (this.props.settings.wordsHidden) {
       className += " --hideWords";
     }
     if (this.props.settings.translationsHidden) {
       className += " --hideTranslations"
     }
+    */
 
     return (
       <div className={className}>
-        <ViewerSettings
-          onSettingsChange={this.props.onSettingsChange}
-          settings={this.props.settings}
-        />
+        <ViewerSettings />
         <div className="setWrappers">
           <div className="setWrapper newSetCreator">
             <div className="description">
