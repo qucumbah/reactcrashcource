@@ -67,4 +67,8 @@ class Viewer extends React.Component {
   }
 }
 
-export default Viewer;
+const mapStateToProps = state => ({
+  settings: state
+});
+
+export default connect(mapStateToProps)(Viewer);
