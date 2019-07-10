@@ -25,6 +25,7 @@ class ViewerSettings extends React.Component {
   render() {
     return (
       <div className="viewerSettings">
+        <div className="title">Viewer settings</div>
         <label htmlFor="hideWords">
           <input
             id="hideWords"

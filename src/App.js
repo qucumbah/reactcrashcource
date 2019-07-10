@@ -36,7 +36,6 @@ class App extends React.Component {
     nextId: 2,
 
     curSet: 0,
-    menuOpen: false,
     page: "viewer",
 
     settings: {
@@ -49,11 +48,11 @@ class App extends React.Component {
   }
 
   menuItems = [
-    {
-      name: "",
-      iconName: "burger",
-      onClick: ()=>this.toggleMenu(),
-    },
+    // {
+    //   name: "",
+    //   iconName: "burger",
+    //   onClick: ()=>this.toggleMenu(),
+    // },
     {
       name: "All sets",
       iconName: "list",
@@ -86,12 +85,6 @@ class App extends React.Component {
     window.onbeforeunload = () => {
       localStorage.setItem("appState", JSON.stringify(this.state));
     }
-  }
-
-  toggleMenu = () => {
-    this.setState({
-      menuOpen: !this.state.menuOpen
-    });
   }
 
   setPage = page => {
@@ -293,8 +286,6 @@ class App extends React.Component {
           <div className="menuPlaceholder" />
           <Menu
             items={this.menuItems}
-            open={this.state.menuOpen}
-            toggle={this.toggleMenu}
           />
           {page}
         </div>

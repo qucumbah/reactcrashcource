@@ -94,8 +94,10 @@ class Word extends React.Component {
             value={this.state.tempTranslation}
             onChange={this.handleTranslationEdition}
           />);
+        let className =
+            "word word--edition"+(this.props.inputOnly?" word--inputOnly":"");
         return (
-          <div className="word word--edition">
+          <div className={className} >
             <Button
               iconName="translate"
               onClick={()=>this.toggleSlider()}
