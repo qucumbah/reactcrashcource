@@ -1,13 +1,18 @@
+//react
 import React from 'react';
+
+//components
 import Menu from './components/Menu.js';
 import SetEditor from './components/SetEditor.js';
 import Viewer from './components/Viewer.js';
 import Exercise from './components/Exercise.js';
 import Settings from './components/Settings.js';
 
+//redux
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
+//styles
 import './App.css';
 
 class App extends React.Component {
@@ -58,11 +63,11 @@ class App extends React.Component {
       iconName: "list",
       onClick: ()=>this.setPage("viewer"),
     },
-    {
-      name: "Exercise",
-      iconName: "exercise",
-      onClick: ()=>this.setPage("exercise"),
-    },
+    // {
+    //   name: "Exercise",
+    //   iconName: "exercise",
+    //   onClick: ()=>this.setPage("exercise"),
+    // },
     {
       name: "Settings",
       iconName: "settings",

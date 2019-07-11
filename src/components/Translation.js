@@ -30,22 +30,14 @@ class Translation extends React.Component {
       return;
     }
 
-    const request = await fetch(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20190703T152027Z.ac8f9778b27e6d81.d993e2f02394b2ca2f02cef87e4de691fd45fbde&lang=${this.props.settings.languageFrom}-${this.props.settings.languageTo}&text=`+this.state.word);
+    const url = `http://localhost:5000/translate?languageFrom=${this.props.settings.languageFrom}&languageTo=${this.props.settings.languageTo}&word=${this.state.word}`;
+    
+    const request = await fetch(url);
     const obj = await request.json();
 
     console.log(obj);
 
-    let code;
-
-    if (obj.code) {
-      code = obj.code;
-    } else if (obj.def.length===0) {
-      code = 1;
-    } else {
-      code = 200;
-    }
-
-    this.setState({ translations: {code, def: obj.def} });
+    this.setState({ translations: obj });
   }
 
   componentDidMount() {
@@ -80,6 +72,14 @@ class Translation extends React.Component {
           );
         });
       break;
+      case 402:
+        partsOfSpeech = (
+          <div>
+            Dictionary API key is blocked<br />
+            Make sure to get your own key
+          </div>
+        );
+      break;
       case 501:
         partsOfSpeech = (
           <div>
@@ -89,6 +89,12 @@ class Translation extends React.Component {
         );
       break;
       default:
+        partsOfSpeech = (
+          <div>
+            Something went wrong: <br />
+            {this.state.translations.errorMessage}
+          </div>
+        );
     }
 
     return (
