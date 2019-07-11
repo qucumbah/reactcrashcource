@@ -1,13 +1,18 @@
+//react
 import React from 'react';
+
+//components
 import Menu from './components/Menu.js';
 import SetEditor from './components/SetEditor.js';
 import Viewer from './components/Viewer.js';
 import Exercise from './components/Exercise.js';
 import Settings from './components/Settings.js';
 
+//redux
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
+//styles
 import './App.css';
 
 class App extends React.Component {
@@ -36,7 +41,6 @@ class App extends React.Component {
     nextId: 2,
 
     curSet: 0,
-    menuOpen: false,
     page: "viewer",
 
     settings: {
@@ -49,21 +53,21 @@ class App extends React.Component {
   }
 
   menuItems = [
-    {
-      name: "",
-      iconName: "burger",
-      onClick: ()=>this.toggleMenu(),
-    },
+    // {
+    //   name: "",
+    //   iconName: "burger",
+    //   onClick: ()=>this.toggleMenu(),
+    // },
     {
       name: "All sets",
       iconName: "list",
       onClick: ()=>this.setPage("viewer"),
     },
-    {
-      name: "Exercise",
-      iconName: "exercise",
-      onClick: ()=>this.setPage("exercise"),
-    },
+    // {
+    //   name: "Exercise",
+    //   iconName: "exercise",
+    //   onClick: ()=>this.setPage("exercise"),
+    // },
     {
       name: "Settings",
       iconName: "settings",
@@ -86,12 +90,6 @@ class App extends React.Component {
     window.onbeforeunload = () => {
       localStorage.setItem("appState", JSON.stringify(this.state));
     }
-  }
-
-  toggleMenu = () => {
-    this.setState({
-      menuOpen: !this.state.menuOpen
-    });
   }
 
   setPage = page => {
@@ -238,9 +236,10 @@ class App extends React.Component {
       switch (action.type) {
         case "SETTINGSCHANGE":
           this.onSettingsChange(action.key, action.value);
+        break;
         default:
-          return Object.assign({}, this.state.settings);
       }
+      return Object.assign({}, this.state.settings);
     }
 
     this.store = createStore(reducer);
@@ -288,12 +287,10 @@ class App extends React.Component {
 
     let result = (
       <Provider store={this.store}>
-        <div className="app">
+        <div className="app container">
           <div className="menuPlaceholder" />
           <Menu
             items={this.menuItems}
-            open={this.state.menuOpen}
-            toggle={this.toggleMenu}
           />
           {page}
         </div>

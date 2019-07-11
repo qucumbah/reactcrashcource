@@ -4,24 +4,26 @@ class Button extends React.Component {
   constructor(props) {
     super(props);
     this.icons = {
-      "burger": "img/outline-menu-24px.svg",
-      "edit": "img/outline-edit-24px.svg",
-      "list": "img/outline-view_list-24px.svg",
-      "exercise": "img/outline-class-24px.svg",
-      "yes": "img/outline-check_circle_outline-24px.svg",
-      "no": "img/outline-highlight_off-24px.svg",
-      "remove": "img/outline-delete-24px.svg",
-      "settings": "img/outline-settings-24px.svg",
-      "translate": "img/baseline-translate-24px.svg",
+      "burger": "outline-menu-24px.svg",
+      "edit": "outline-edit-24px.svg",
+      "list": "outline-view_list-24px.svg",
+      "exercise": "outline-class-24px.svg",
+      "yes": "outline-check_circle_outline-24px.svg",
+      "no": "outline-highlight_off-24px.svg",
+      "remove": "outline-delete-24px.svg",
+      "settings": "outline-settings-24px.svg",
+      "translate": "baseline-translate-24px.svg",
+      "login": "outline-person-24px.svg",
+      "register": "outline-person_add-24px.svg",
     }
   }
 
   render() {
-    let imgPath = this.icons[this.props.iconName];
+    const imgPath = this.icons[this.props.iconName];
 
     return (
       <div className="button" onClick={this.props.onClick}>
-        <img src={imgPath} alt={this.props.alt} name={this.props.iconName} />
+        <img src={"img/"+imgPath} alt={this.props.alt} name={this.props.iconName} />
       </div>
     )
   }

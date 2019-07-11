@@ -1,10 +1,14 @@
 //Vars
 $menuLeftWidth: 400px;
-$menuIconWidth: 60px;
+//$menuIconWidth: 60px;
+$menuIconWidth: 30px;
+$menuHeight: 80px;
+$menuMobileWidth: 250px;
 
 $transitionDuration: .2s;
 
-$wordBackgroundColor: #f4f4f4;
+$wordBackgroundColor: #fff;
+$primary: #168ae3;
 
 * {
   box-sizing: border-box;
@@ -14,7 +18,6 @@ $wordBackgroundColor: #f4f4f4;
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.4;
 }
 
 a {
@@ -22,6 +25,16 @@ a {
   text-decoration: none;
 }
 
+.container {
+  height: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.app {
+  position: relative;
+}
+/*
 .app {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -35,7 +48,157 @@ a {
   width: $menuIconWidth;
   height: 100%;
 }
+*/
 
+.menu, .menuPlaceholder {
+  width: 100%;
+  height: $menuHeight;
+}
+
+.menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: $primary;
+  z-index: 50;
+
+  .darken {
+    display: none;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    transition: $transitionDuration;
+    height: $menuHeight;
+  }
+  .left {
+    display: flex;
+    justify-content: flex-start;
+    .logo__desktop {
+      cursor: pointer;
+      height: 80px;
+      width: 80px;
+      padding: 13px;
+      object-fit: contain;
+      display: block;
+    }
+  }
+  .right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .menuItem {
+    height: $menuHeight;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+
+    margin: 0 15px;
+
+    .button {
+      display: block;
+
+      width: $menuIconWidth;
+      height: $menuIconWidth;
+
+      img {
+        width: 100%;
+        height: 100%;
+        filter: invert(100%);
+      }
+    }
+    .name {
+      font-size: 24px;
+    }
+
+    &#menuItem--burger {
+      display: none;
+    }
+  }
+
+  .logo__mobile {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .darken {
+      z-index: 51;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+    }
+    .container {
+      width: $menuMobileWidth;
+    }
+
+    &.menu--open {
+      .darken {
+        background-color: rgba(0, 0, 0, 0.4);
+        display: block;
+      }
+      .container {
+        left: 0;
+      }
+    }
+    &.menu--closed {
+      .darken {
+        background-color: rgba(0, 0, 0, 0);
+        display: none;
+      }
+      .container {
+        left: -$menuMobileWidth;
+      }
+    }
+
+    .menuItem {
+      margin: 0 40px;
+
+      &#menuItem--burger {
+        display: flex;
+        width: $menuHeight;
+        margin: 0;
+        .button {
+          width: 70%;
+          height: 70%;
+        }
+      }
+    }
+
+    .logo__mobile {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: $menuHeight;
+      height: $menuHeight;
+      padding: 13px;
+    }
+
+    .container {
+      background-color: $primary;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      height: 100%;
+      z-index: 52;
+    }
+
+    .left, .right {
+      flex-direction: column;
+
+      .logo__desktop {
+        display: none;
+      }
+    }
+  }
+}
+
+
+/*
 .menu {
   position: fixed;
   width: auto;
@@ -133,7 +296,7 @@ a {
   width: 100%;
 
   border: 1px solid black;
-  background-color: $wordBackgroundColor;
+  //background-color: $wordBackgroundColor;
   display: grid;
   grid-template-columns: 50px 1fr 1fr 50px 50px;
 
@@ -158,12 +321,26 @@ a {
     margin-top: 50px;
   }
 }
+*/
 
 .word {
-  border: 1px solid black;
-  background-color: $wordBackgroundColor;
+  background-color: #f7f7f7;
   display: grid;
   grid-template-columns: 50px 1fr 1fr 50px 50px;
+
+  border-top: 1px solid black;
+
+  input {
+    font-size: 1.25rem;
+    background-color: #fff;
+    border: none;
+    border-right: 1px solid black;
+    min-width: 10px;
+
+    &:nth-child(2) {
+      border-left: 1px solid black;
+    }
+  }
 
   .button,
   .word__word,
@@ -184,6 +361,11 @@ a {
 
 .translation {
   grid-column: span 4;
+
+  input {
+    border: 1px solid black;
+    border-left: none;
+  }
 }
 
 .settings {
@@ -219,6 +401,8 @@ a {
 }
 
 .viewerSettings {
+  margin: 20px;
+
   label {
     width: 50%;
     height: 50px;
@@ -230,30 +414,53 @@ a {
 }
 
 .setWrapper {
-  margin: 20px;
-  border: 1px solid black;
+  margin: 30px;
+  border: 2px solid black;
 
   .upperPanel {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    span {
-      vertical-align: text-bottom;
-    }
   }
 
   .progressBar {
-    div {
+    .item {
       display: inline-block;
       vertical-align: bottom;
       width: 30px;
       height: 30px;
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        background-color: $primary;
+        border-radius: 100px;
+        border: 1px solid $primary;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+      }
     }
+    .unchecked::after {
+      background-color: white;
+    }
+    /*
     .checked {
-      background-color: green;
+      background-color: $primary;
     }
     .unchecked {
       background-color: gray;
+    }
+    */
+
+    .progress {
+      display: inline-flex;
+      align-items: center;
+      height: 91%;
+      margin-left: 10px;
     }
   }
 

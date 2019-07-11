@@ -8,7 +8,7 @@ class Settings extends React.Component {
 
     //sometimes language code != country code; here languageCode=countryCode
     const languages = `
-    be,ru,cs=cz,en=gb,de,
+    ru,en=gb,de,cs=cz,be=by,
     tr,da=dk,el=gr,es,et,
     fi,fr,it,lt,lv,
     nl,no,pt,sk,sv,

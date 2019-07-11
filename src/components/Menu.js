@@ -1,28 +1,62 @@
 import React from 'react';
-import Button from './Button.js';
+import MenuItem from './MenuItem.js';
 
 class Menu extends React.Component {
+  state = {
+    open: false,
+  }
+
   toggle = () => {
-    if (this.props.open) {
-      this.props.toggle();
-    }
+    this.setState({ open: !this.state.open });
   }
 
   render() {
-    let menuItems = this.props.items.map((item, index) => {
+    const burgerButton = (
+      <MenuItem
+        onClick={this.toggle}
+        iconName="burger"
+        name=""
+      />
+    );
+    const menuItems = this.props.items.map((item, index) => {
       return (
-        <div key={index} onClick={item.onClick} className="menuItem">
-          <Button iconName={item.iconName} alt={item.name} />
-          <span>{item.name}</span>
-        </div>
+        <MenuItem
+          key={index}
+          onClick={item.onClick}
+          iconName={item.iconName}
+          name={item.name}
+        />
       );
     });
+    const signin = (
+      <MenuItem
+        onClick={this.handleRegister}
+        iconName="register"
+        name="sign in"
+      />
+    );
+    const login = (
+      <MenuItem
+        onClick={this.handleLogin}
+        iconName="login"
+        name="log in"
+      />
+    );
 
     return (
-      <div className={"menu "+(this.props.open?"menu--open":"menu--closed")}>
+      <div className={"menu "+(this.state.open?"menu--open":"menu--closed")}>
         <div className="darken" onClick={this.toggle} />
-        <div className="left">
-          {menuItems}
+        {burgerButton}
+        <img className="logo__mobile" src="img/logo.png" alt="" />
+        <div className="container">
+          <div className="left" onClick={this.toggle}>
+            <img className="logo__desktop" src="img/logo.png" alt="" />
+            {menuItems}
+          </div>
+          <div className="right" onClick={this.toggle}>
+            {signin}
+            {login}
+          </div>
         </div>
       </div>
     );

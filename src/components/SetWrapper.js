@@ -32,7 +32,7 @@ class SetWrapper extends React.Component {
     for (let i = 1;i<=10;i++) {
       progressItems.push(
         <div
-          className={i<=this.props.set.progress?"checked":"unchecked"}
+          className={"item "+(i<=this.props.set.progress?"checked":"unchecked")}
           key={i}
           onClick={()=>this.props.onProgressChange(this.props.set.id, i)}
         />
@@ -73,7 +73,9 @@ class SetWrapper extends React.Component {
         <div className="upperPanel">
           <div className="progressBar">
             {progressItems}
-            <span>{this.props.set.progress}/10</span>
+            <div className="progress">
+              {this.props.set.progress}/10
+            </div>
           </div>
           <div className="buttons">
             {buttons}
