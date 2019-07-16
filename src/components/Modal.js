@@ -2,10 +2,15 @@ import React from 'react';
 
 class Modal extends React.Component {
   render() {
+    const className =
+        "modal"+(this.props.open?" modal--open":" modal--closed");
+
     return (
-      <div className="modal">
-        <div className="darken" onClick={this.toggle} />
-        {this.props.children}
+      <div className={className}>
+        <div className="darken" onClick={this.props.onToggle} />
+        <div className="content">
+          {this.props.children}
+        </div>
       </div>
     )
   }

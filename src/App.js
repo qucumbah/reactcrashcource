@@ -7,6 +7,7 @@ import SetEditor from './components/SetEditor.js';
 import Viewer from './components/Viewer.js';
 import Exercise from './components/Exercise.js';
 import Settings from './components/Settings.js';
+import Modal from './components/Modal.js';
 
 //redux
 import { createStore } from 'redux';
@@ -49,15 +50,13 @@ class App extends React.Component {
       instantRemoval: false,
       languageTo: "en",
       languageFrom: "en"
-    }
+    },
+
+    modalOpen: false,
+    modalContent: "login",
   }
 
-  menuItems = [
-    // {
-    //   name: "",
-    //   iconName: "burger",
-    //   onClick: ()=>this.toggleMenu(),
-    // },
+  menuLeftItems = [
     {
       name: "All sets",
       iconName: "list",
@@ -72,6 +71,19 @@ class App extends React.Component {
       name: "Settings",
       iconName: "settings",
       onClick: ()=>this.setPage("settings"),
+    },
+  ]
+
+  menuRightItems = [
+    {
+      name: "Sign in",
+      iconName: "signin",
+      onClick: ()=>this.openModal("signin"),
+    },
+    {
+      name: "Log in",
+      iconName: "login",
+      onClick: ()=>this.openModal("login"),
     },
   ]
 
@@ -93,12 +105,7 @@ class App extends React.Component {
   }
 
   setPage = page => {
-    if (this.state.menuOpen) {
-      this.toggleMenu();
-    }
-    this.setState({
-      page,
-    });
+    this.setState({ page });
   }
 
   handleSetChange = (setId, action, index, newWord, newTranslation) => {
@@ -245,6 +252,19 @@ class App extends React.Component {
     this.store = createStore(reducer);
   }
 
+  toggleModal = () => {
+    this.setState({ modalOpen: !this.state.modalOpen });
+  }
+
+  setModalContent = content => {
+    this.setState({ modalContent: content });
+  }
+
+  openModal = modalName => {
+    this.setModalContent(modalName);
+    this.setState({ modalOpen: true });
+  }
+
   render() {
     let page;
     switch (this.state.page) {
@@ -285,18 +305,32 @@ class App extends React.Component {
       break;
     }
 
-    let result = (
+    const login = <div>Login</div>;
+    const signin = <div>Signin</div>;
+    const currentModalContent =
+        this.state.modalContent==="login"?login:signin;
+
+    const modal = (
+      <Modal
+        open={this.state.modalOpen}
+        onToggle={this.toggleModal}
+        children={currentModalContent}
+      />
+    );
+
+    return (
       <Provider store={this.store}>
+        <div className="menuPlaceholder" />
+        <Menu
+          leftItems={this.menuLeftItems}
+          rightItems={this.menuRightItems}
+        />
+        {modal}
         <div className="app container">
-          <div className="menuPlaceholder" />
-          <Menu
-            items={this.menuItems}
-          />
           {page}
         </div>
       </Provider>
     );
-    return result;
   }
 }
 

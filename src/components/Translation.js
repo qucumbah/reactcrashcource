@@ -31,7 +31,7 @@ class Translation extends React.Component {
     }
 
     const url = `http://localhost:5000/translate?languageFrom=${this.props.settings.languageFrom}&languageTo=${this.props.settings.languageTo}&word=${this.state.word}`;
-    
+
     const request = await fetch(url);
     const obj = await request.json();
 
@@ -52,7 +52,6 @@ class Translation extends React.Component {
     switch (this.state.translations.code) {
       case 0:
         partsOfSpeech = <div>...</div>;
-        console.log("yhyyy");
       break;
       case 1:
         partsOfSpeech = <div>Unknown word</div>;

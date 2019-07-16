@@ -10,15 +10,12 @@ class Menu extends React.Component {
     this.setState({ open: !this.state.open });
   }
 
-  render() {
-    const burgerButton = (
-      <MenuItem
-        onClick={this.toggle}
-        iconName="burger"
-        name=""
-      />
-    );
-    const menuItems = this.props.items.map((item, index) => {
+  hide = () => {
+    this.setState({ open: false });
+  }
+
+  getMenuItems = items => {
+    const result = items.map((item, index) => {
       return (
         <MenuItem
           key={index}
@@ -28,20 +25,19 @@ class Menu extends React.Component {
         />
       );
     });
-    const signin = (
+    return result;
+  }
+
+  render() {
+    const burgerButton = (
       <MenuItem
-        onClick={this.handleRegister}
-        iconName="register"
-        name="sign in"
+        onClick={this.toggle}
+        iconName="burger"
+        name=""
       />
     );
-    const login = (
-      <MenuItem
-        onClick={this.handleLogin}
-        iconName="login"
-        name="log in"
-      />
-    );
+    const leftItems = this.getMenuItems(this.props.leftItems);
+    const rightItems = this.getMenuItems(this.props.rightItems);
 
     return (
       <div className={"menu "+(this.state.open?"menu--open":"menu--closed")}>
@@ -49,13 +45,12 @@ class Menu extends React.Component {
         {burgerButton}
         <img className="logo__mobile" src="img/logo.png" alt="" />
         <div className="container">
-          <div className="left" onClick={this.toggle}>
+          <div className="left" onClick={this.hide}>
             <img className="logo__desktop" src="img/logo.png" alt="" />
-            {menuItems}
+            {leftItems}
           </div>
-          <div className="right" onClick={this.toggle}>
-            {signin}
-            {login}
+          <div className="right" onClick={this.hide}>
+            {rightItems}
           </div>
         </div>
       </div>
