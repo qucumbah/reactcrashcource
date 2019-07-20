@@ -1,0 +1,17 @@
+all the info is stored in session cookies
+on login write additional cookie: loggedIn=true (cosmetic change, doesn't affect security)
+when loading the app, we'll check this additional cookie;
+if loggedIn=false:
+	render login and signin buttons
+	load data from localStorage if there is any
+if loggedIn=true:
+	app.state.isLoading=true
+	render logout button
+	fetch user info from get /userInfo (uses session cookie, returns error if the user is not logged in/wrong cookie)
+	render loader instead of words
+	when fetch is done remove loader and render words
+
+concerns:
+without registration it has to use localStorage, so it will use two different ways to alter user info => ?
+on each change app will have to send entire user data to server => need to refactor app state changes:
+	better sets array (right now it uses set id, which is unoptimal; use set's pos in the array. This way we wont have to search for the set each time we change/add words. Leave setid for react rendering)

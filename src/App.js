@@ -8,6 +8,8 @@ import Viewer from './components/Viewer.js';
 import Exercise from './components/Exercise.js';
 import Settings from './components/Settings.js';
 import Modal from './components/Modal.js';
+import Signin from './components/Signin.js';
+import Login from './components/Login.js';
 
 //redux
 import { createStore } from 'redux';
@@ -305,8 +307,8 @@ class App extends React.Component {
       break;
     }
 
-    const login = <div>Login</div>;
-    const signin = <div>Signin</div>;
+    const login = <Login onToggle={this.toggleModal} />;
+    const signin = <Signin onToggle={this.toggleModal} />;
     const currentModalContent =
         this.state.modalContent==="login"?login:signin;
 
@@ -314,7 +316,7 @@ class App extends React.Component {
       <Modal
         open={this.state.modalOpen}
         onToggle={this.toggleModal}
-        children={currentModalContent}
+        content={currentModalContent}
       />
     );
 

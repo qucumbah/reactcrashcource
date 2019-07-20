@@ -9,7 +9,7 @@ class Modal extends React.Component {
       <div className={className}>
         <div className="darken" onClick={this.props.onToggle} />
         <div className="content">
-          {this.props.children}
+          {this.props.content}
         </div>
       </div>
     )

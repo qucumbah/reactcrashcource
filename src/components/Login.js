@@ -1,33 +1,23 @@
 import React from 'react';
 
-class Signin extends React.Component {
+class Login extends React.Component {
   render() {
     return (
       <div className="modalForm signin">
         <div className="upper">
-          <div className="title">Sign in</div>
+          <div className="title">Log in</div>
           <div className="cross" onClick={this.props.onToggle} />
         </div>
-        <form method="post" action="/signin">
+        <form method="post" action="/login">
           <input
             placeholder="Login"
             type="text"
             name="login"
           />
           <input
-            placeholder="Email"
-            type="email"
-            name="email"
-          />
-          <input
             placeholder="Password"
             type="password"
-            name="password1"
-          />
-          <input
-            placeholder="Repeat password"
-            type="password"
-            name="password2"
+            name="password"
           />
           <input
             type="submit"
@@ -39,4 +29,4 @@ class Signin extends React.Component {
   }
 }
 
-export default Signin;
+export default Login;
