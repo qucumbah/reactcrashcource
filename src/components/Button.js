@@ -14,7 +14,7 @@ class Button extends React.Component {
       "settings": "outline-settings-24px.svg",
       "translate": "baseline-translate-24px.svg",
       "login": "outline-person-24px.svg",
-      "signin": "outline-person_add-24px.svg",
+      "signup": "outline-person_add-24px.svg",
     }
   }
 

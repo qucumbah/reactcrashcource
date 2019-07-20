@@ -1,14 +1,14 @@
 import React from 'react';
 
-class Signin extends React.Component {
+class Signup extends React.Component {
   render() {
     return (
-      <div className="modalForm signin">
+      <div className="modalForm signup">
         <div className="upper">
-          <div className="title">Sign in</div>
+          <div className="title">Sign up</div>
           <div className="cross" onClick={this.props.onToggle} />
         </div>
-        <form method="post" action="/signin">
+        <form method="post" action="/signup">
           <input
             placeholder="Login"
             type="text"
@@ -39,4 +39,4 @@ class Signin extends React.Component {
   }
 }
 
-export default Signin;
+export default Signup;

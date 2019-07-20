@@ -8,7 +8,7 @@ import Viewer from './components/Viewer.js';
 import Exercise from './components/Exercise.js';
 import Settings from './components/Settings.js';
 import Modal from './components/Modal.js';
-import Signin from './components/Signin.js';
+import Signup from './components/Signup.js';
 import Login from './components/Login.js';
 
 //redux
@@ -78,9 +78,9 @@ class App extends React.Component {
 
   menuRightItems = [
     {
-      name: "Sign in",
-      iconName: "signin",
-      onClick: ()=>this.openModal("signin"),
+      name: "Sign up",
+      iconName: "signup",
+      onClick: ()=>this.openModal("signup"),
     },
     {
       name: "Log in",
@@ -308,9 +308,9 @@ class App extends React.Component {
     }
 
     const login = <Login onToggle={this.toggleModal} />;
-    const signin = <Signin onToggle={this.toggleModal} />;
+    const signup = <Signup onToggle={this.toggleModal} />;
     const currentModalContent =
-        this.state.modalContent==="login"?login:signin;
+        this.state.modalContent==="login"?login:signup;
 
     const modal = (
       <Modal

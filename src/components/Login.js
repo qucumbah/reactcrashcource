@@ -3,7 +3,7 @@ import React from 'react';
 class Login extends React.Component {
   render() {
     return (
-      <div className="modalForm signin">
+      <div className="modalForm login">
         <div className="upper">
           <div className="title">Log in</div>
           <div className="cross" onClick={this.props.onToggle} />
