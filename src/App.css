@@ -415,10 +415,10 @@ a {
       background-color: #eee;
       width: 100%;
       height: 1px; }
-  .modalForm form {
+  .modalForm .form {
     padding-top: 10px; }
-    .modalForm form input {
+    .modalForm .form input, .modalForm .form .errors {
       display: block;
       margin-bottom: 10px; }
-      .modalForm form input:last-child {
+      .modalForm .form input:last-child, .modalForm .form .errors:last-child {
         margin-bottom: 0; }

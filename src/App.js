@@ -76,7 +76,14 @@ class App extends React.Component {
     },
   ]
 
-  menuRightItems = [
+  menuRightItemsLoggedIn = [
+    {
+      name: "Log out",
+      iconName: "signup",
+      onClick: ()=>this.onLogout(),
+    },
+  ]
+  menuRightItemsLoggedOut = [
     {
       name: "Sign up",
       iconName: "signup",
@@ -101,9 +108,31 @@ class App extends React.Component {
     if (savedState) {
       this.state = JSON.parse(localStorage.getItem("appState"));
     }
+    const isLoggedIn = this.getCookie("isLoggedIn");
+    this.state.isLoggedIn = isLoggedIn;
     window.onbeforeunload = () => {
       localStorage.setItem("appState", JSON.stringify(this.state));
     }
+  }
+
+  getCookie = name => {
+    const match = document.cookie.match(
+        new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) {
+      return match[2];
+    }
+  }
+
+  onLogout = () => {
+    fetch("http://localhost:5000/logout", { method: "POST" })
+      .then(result => {
+        this.setState({ isLoggedIn: false });
+      });
+  }
+
+  onLogin = () => {
+    this.setState({ isLoggedIn: true });
+    this.toggleModal();
   }
 
   setPage = page => {
@@ -151,11 +180,7 @@ class App extends React.Component {
         throw new Error("Unknown set change action");
     }
 
-    console.log(this.state);
-
     this.setState(newState);
-
-    console.log(this.state);
   }
 
   addWord = word => {
@@ -307,8 +332,19 @@ class App extends React.Component {
       break;
     }
 
-    const login = <Login onToggle={this.toggleModal} />;
-    const signup = <Signup onToggle={this.toggleModal} />;
+    const login = (
+      <Login
+        onToggle={this.toggleModal}
+        onLogin={this.onLogin}
+      />
+    );
+    const signup = (
+      <Signup
+        onToggle={this.toggleModal}
+        onSignup={this.onSignup}
+      />
+    );
+
     const currentModalContent =
         this.state.modalContent==="login"?login:signup;
 
@@ -320,12 +356,17 @@ class App extends React.Component {
       />
     );
 
+    const leftItems = this.menuLeftItems;
+    const rightItems = this.state.isLoggedIn?
+      this.menuRightItemsLoggedIn:
+      this.menuRightItemsLoggedOut;
+
     return (
       <Provider store={this.store}>
         <div className="menuPlaceholder" />
         <Menu
-          leftItems={this.menuLeftItems}
-          rightItems={this.menuRightItems}
+          leftItems={leftItems}
+          rightItems={rightItems}
         />
         {modal}
         <div className="app container">
